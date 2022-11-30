@@ -26,9 +26,7 @@ public class Server {
    * Initializes server. Please note, no longer uses main method
    */
   public static void initializeServer() {
-    ProtectedCSVWrapper loadedCSV = new ProtectedCSVWrapper();
     Moshi moshi = new Moshi.Builder().build();
-    String FILEPATH = "/Users/caleb/Desktop/CS32/Sprints/integration-cmoran5-ekehaya/back-end/src/main/java/edu/brown/cs/student/server/data/fullDownload.geojson";
 
     Spark.port(3232);
     /*
@@ -55,11 +53,7 @@ public class Server {
     });
 
     // Setting up the handler for the GET endpoints
-    Spark.get("loadcsv", new LoadCSVHandler(loadedCSV, moshi));
-    Spark.get("getcsv", new GetCSVHandler(loadedCSV, moshi));
-    Spark.get("stats", new StatsHandler(loadedCSV, moshi));
-    Spark.get("weather", new WeatherHandler(moshi));
-    Spark.get("geojson", new GeoJSONHandler(moshi));
+    Spark.get("TODO", new TODO);
 
     /* Add new endpoints above this line.
     '*' is a catch-all, and endpoints are assigned in order of declaration */
