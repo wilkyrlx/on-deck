@@ -9,12 +9,14 @@ const events = [
     title: 'event 1',
     start: '2022-12-14T10:00:00',
     end: '2022-12-14T12:00:00',
+    image: 'test',
   },
   {
-    id: 2,
-    title: 'event 2',
-    start: '2022-12-2T10:00:00',
-    end: '2022-12-2T12:00:00',
+    id: 1,
+    title: 'event 1',
+    start: '2022-12-02T10:00:00',
+    end: '2022-12-02T12:00:00',
+    image: 'test 2',
   },
 ];
 
@@ -38,7 +40,20 @@ function FullCalendarApp() {
         nowIndicator
         dateClick={(e) => console.log(e.dateStr)}
         eventClick={(e) => console.log(e.event.id)}
+        eventContent={renderEventContent}
       />
+    </div>
+  );
+}
+
+// https://codesandbox.io/s/nxodg?file=/src/App.js:3419-3596
+// demonstrates custom event 
+function renderEventContent(eventInfo) {
+  return (
+    <div>
+      <b>{eventInfo.timeText}</b>
+      <i>{eventInfo.event.title}</i>
+      <p>{eventInfo.event.extendedProps.image}</p>
     </div>
   );
 }
