@@ -3,6 +3,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
+// TODO: this file is currently JSX, would be better if it could be TSX
+
 const events = [
   {
     id: 1,

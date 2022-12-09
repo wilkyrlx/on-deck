@@ -1,0 +1,7 @@
+.navigator {
+    height: 80px;
+    background-color: rgb(37, 247, 33);
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
