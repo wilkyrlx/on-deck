@@ -1,36 +1,13 @@
-import FullCalendar from '@fullcalendar/react';
+import FullCalendar, { EventInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { Event } from '../model/Event';
 
-// TODO: this file is currently JSX, would be better if it could be TSX
-
-const events = [
-  {
-    id: 1,
-    title: 'event 1',
-    start: '2022-12-14T10:00:00',
-    end: '2022-12-14T12:00:00',
-    image: 'test',
-  },
-  {
-    id: 2,
-    title: 'event 2',
-    start: '2022-12-02T10:00:00',
-    end: '2022-12-02T12:00:00',
-    image: 'test 2',
-  },
-  {
-    id: 3,
-    title: 'event 3',
-    start: '2022-12-02T10:00:00',
-    end: '2022-12-02T12:00:00',
-    image: 'test 2',
-  },
-];
-
-function FullCalendarApp() {
-  return (
+function FullCalendarApp({ events }: { events: Event[] }) {
+    const convertedEvents = events.map(e => convertToCalendarEvent(e))
+    console.log(convertedEvents)
+    return (
     <div className="calendar">
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -44,7 +21,7 @@ function FullCalendarApp() {
             click: () => console.log('new event'),
           },
         }}
-        events={events}
+        events={convertedEvents}
         eventColor="red"
         nowIndicator
         dateClick={(e) => console.log(e.dateStr)}
@@ -52,12 +29,14 @@ function FullCalendarApp() {
         eventContent={renderEventContent}
       />
     </div>
-  );
+    );
 }
 
 // https://codesandbox.io/s/nxodg?file=/src/App.js:3419-3596
 // demonstrates custom event 
-function renderEventContent(eventInfo) {
+function renderEventContent(eventInfo: EventInput) {
+    const event = eventInfo.event.extendedProps.eventDetails
+    console.log(event)
   return (
     <div>
       <b>{eventInfo.timeText}</b>
@@ -68,3 +47,13 @@ function renderEventContent(eventInfo) {
 }
 
 export default FullCalendarApp;
+
+function convertToCalendarEvent(event: Event): EventInput {
+    return {
+        id: event.id,
+        title: event.title(),
+        start: event.startTime.toISOString(), // format of '2022-12-14T10:00:00'
+        end: event.endTime.toISOString(),
+        eventDetails: event,
+    }
+}
