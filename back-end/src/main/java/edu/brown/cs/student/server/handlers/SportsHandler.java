@@ -47,7 +47,7 @@ public class SportsHandler implements Route {
     String leagueName = request.queryParams("league");
     String teamName = request.queryParams("team");
 
-    int teamID = getTeamID(sportName, leagueName, teamName);
+    String teamID = getTeamID(sportName, leagueName, teamName);
 
     try {
       String fullURL = API_URL_STUB + sportName + "/"
@@ -87,8 +87,8 @@ public class SportsHandler implements Route {
    * @param teamName the name of the team
    * @return the ESPN internal team ID
    */
-  private int getTeamID(String sportName, String leagueName, String teamName) {
-    return this.idConverter.getTeamID(sportName, leagueName, teamName);
+  private String getTeamID(String sportName, String leagueName, String teamName) {
+    return this.idConverter.getTeamID(teamName);
   }
 
   /**
