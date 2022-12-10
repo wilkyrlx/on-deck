@@ -5,6 +5,8 @@ import edu.brown.cs.student.server.data.ESPNContents;
 import edu.brown.cs.student.server.data.TeamID;
 import edu.brown.cs.student.util.WebResponse;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -14,14 +16,18 @@ public class SportsHandler implements Route {
   // example: http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/15/schedule
   public final Moshi moshi;
   private final TeamID idConverter;
+  private final Map<String, Object> responseMap;
 
   public SportsHandler(Moshi moshi) {
     this.moshi = moshi;
     this.idConverter = new TeamID(this);
+    this.responseMap = new LinkedHashMap<>();
   }
 
   @Override
   public Object handle(Request request, Response response) throws Exception {
+    this.responseMap.clear();
+
     String sportName = request.queryParams("sport");
     String leagueName = request.queryParams("league");
     String teamName = request.queryParams("team");
@@ -33,11 +39,12 @@ public class SportsHandler implements Route {
           + leagueName + "/teams/" + teamID + "/schedule";
       String apiJSON = WebResponse.getWebResponse(fullURL).body();
       ESPNContents scheduleData = this.deserializeSchedule(apiJSON);
+      System.out.println(scheduleData);  // for testing purposes
 
     } catch (IOException | InterruptedException e) {
-      this.errorHandle();
+      this.responseMap.put("result", "error_datasource");
     }
-    return null; // TODO return output map
+    return this.responseMap;
   }
 
   private int getTeamID(String sportName, String leagueName, String teamName) {
@@ -46,9 +53,5 @@ public class SportsHandler implements Route {
 
   private ESPNContents deserializeSchedule(String json) throws IOException {
     return moshi.adapter(ESPNContents.class).fromJson(json);
-  }
-
-  public void errorHandle() {
-    // TODO: write
   }
 }

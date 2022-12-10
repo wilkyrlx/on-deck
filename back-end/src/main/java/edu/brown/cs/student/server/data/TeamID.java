@@ -23,7 +23,7 @@ public class TeamID {
         sportsHandler.moshi.adapter(ESPNContents.class).fromJson(apiJSON);  // TODO: what are we doing with this result
       }
     } catch (IOException | InterruptedException e) {
-      sportsHandler.errorHandle();  // TODO: change this
+        // TODO: error handle
     }
   }
 

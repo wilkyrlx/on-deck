@@ -6,6 +6,6 @@ public record ESPNContents(Team team, List<Event> events) {}
 
 record Team(String displayName, String logo, String recordSummary) {}
 
-record Event(List<Link> links) {}
+record Event(List<Link> links, String date, String time) {}
 
 record Link(String href){}
