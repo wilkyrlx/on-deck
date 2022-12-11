@@ -79,6 +79,18 @@ public class SportsHandler implements Route {
   }
 
   /**
+   * Returns ESPN's internal team ID for the given team.
+   *
+   * @param sportName the name of the sport
+   * @param leagueName the name of the league
+   * @param teamName the name of the team
+   * @return the ESPN internal team ID
+   */
+  private int getTeamID(String sportName, String leagueName, String teamName) {
+    return this.idConverter.getTeamID(sportName, leagueName, teamName);
+  }
+
+  /**
    * Deserializes the JSON.
    *
    * @param json the JSON to be deserialized
