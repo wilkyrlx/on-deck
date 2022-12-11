@@ -19,8 +19,8 @@ function SavedTeamItem({ team, onRemove }: { team: Team, onRemove: () => void })
         <div className="team-item">
             <img src={team.iconUrl}/>
             <div className="team-item-text">
-                <p>{team.name}</p>
-                <p>{sportToString(team.sport)}</p>
+                <p className="team-item-name">{team.name}</p>
+                <p className="team-item-sport">{sportToString(team.sport)}</p>
             </div>
         </div>
     )

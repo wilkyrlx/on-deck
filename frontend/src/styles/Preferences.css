@@ -1,4 +1,14 @@
 .team-item {
     display: flex;
     align-items: center;
+    gap: 12px;
+}
+
+.team-item > img {
+    width: 40px;
+    height: 40px;
+}
+
+.team-item-name {
+    font-weight: bold;
 }
