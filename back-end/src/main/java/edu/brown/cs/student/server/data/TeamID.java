@@ -25,12 +25,13 @@ public class TeamID {
     }
     for (TeamWrapper.Team team: teamList) {
       this.teamNameToIDs.put(team.slug(), team.id());
+      /* slug is the team name in a computer-friendly format */
     }
   }
 
   public TeamID(SportsHandler sportsHandler) {
-    String API_URL_STUB = "https://site.api.espn.com/apis/site/v2/sports/";
-    List<String> leagueList = Arrays.asList(
+    final String API_URL_STUB = "https://site.api.espn.com/apis/site/v2/sports/";
+    final List<String> leagueList = Arrays.asList(
         "football/nfl", "baseball/mlb", "basketball/nba", "hockey/nhl"
     );
 
