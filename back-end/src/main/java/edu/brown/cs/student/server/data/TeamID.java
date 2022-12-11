@@ -3,6 +3,7 @@ package edu.brown.cs.student.server.data;
 import edu.brown.cs.student.server.data.ESPNTeams.Sport.League.TeamWrapper;
 import edu.brown.cs.student.server.handlers.SportsHandler;
 import edu.brown.cs.student.util.WebResponse;
+import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,14 +11,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TeamID {
-  private HashMap<String, String> teamNameToIDs;
+  private final HashMap<String, String> teamNameToIDs = new HashMap<String, String>();
 
   private TeamWrapper.Team extractTeam(TeamWrapper tw) {
-    return tw.t();
+    return tw.team();
   }
 
   private void constructHashMap(ESPNTeams response) {
-    List<TeamWrapper> teamWrapperList = response.alos().get(0).alol().get(0).alot();
+    List<TeamWrapper> teamWrapperList = response.sports().get(0).leagues().get(0).teams();
     List<TeamWrapper.Team> teamList = new ArrayList<>();
 
     for (TeamWrapper teamWrapper : teamWrapperList) {
@@ -39,8 +40,10 @@ public class TeamID {
         String fullURL = API_URL_STUB + league + "/teams";
         String apiJSON = WebResponse.getWebResponse(fullURL).body();
         ESPNTeams ESPNRes = sportsHandler.moshi.adapter(ESPNTeams.class).fromJson(apiJSON);
-        if (ESPNRes != null) {
+        if (ESPNRes != null && ESPNRes.sports() != null) {
           this.constructHashMap(ESPNRes);
+        } else {
+          throw new RuntimeException();
         }
       }
     } catch (IOException | InterruptedException e) {

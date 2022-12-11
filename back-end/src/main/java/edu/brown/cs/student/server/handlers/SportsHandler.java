@@ -87,7 +87,8 @@ public class SportsHandler implements Route {
    * @return the ESPN internal team ID
    */
   private int getTeamID(String sportName, String leagueName, String teamName) {
-    return this.idConverter.getTeamID(sportName, leagueName, teamName);
+    return 999;
+    //return this.idConverter.getTeamID(sportName, leagueName, teamName);
   }
 
   /**

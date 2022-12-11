@@ -2,11 +2,11 @@ package edu.brown.cs.student.server.data;
 
 import java.util.List;
 
-public record ESPNTeams(List<Sport> alos) {
-  public record Sport(List<League> alol) {
-    public record League(List<TeamWrapper> alot) {
-      public record TeamWrapper(Team t) {
-        public record Team(String id, String displayName, String color, List<Logo> logoList, List<Link> linkList) {
+public record ESPNTeams(List<Sport> sports) {
+  public record Sport(List<League> leagues) {
+    public record League(List<TeamWrapper> teams) {
+      public record TeamWrapper(Team team) {
+        public record Team(String id, String displayName, String color, List<Logo> logos, List<Link> links) {
           public record Logo(String href) {
 
           }
