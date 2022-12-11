@@ -48,7 +48,7 @@ public class Server {
     });
 
     // Setting up the handler for the GET endpoints
-    Spark.get("TODO", new SportsHandler(moshi));
+    Spark.get("sports", new SportsHandler(moshi));
 
     /* Add new endpoints above this line.
     '*' is a catch-all, and endpoints are assigned in order of declaration */

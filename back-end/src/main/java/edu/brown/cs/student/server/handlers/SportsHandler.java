@@ -47,7 +47,7 @@ public class SportsHandler implements Route {
     String leagueName = request.queryParams("league");
     String teamName = request.queryParams("team");
 
-    int teamID = getTeamID(sportName, leagueName, teamName);
+    String teamID = this.idConverter.getTeamID(teamName);
 
     try {
       String fullURL = API_URL_STUB + sportName + "/"
@@ -56,7 +56,6 @@ public class SportsHandler implements Route {
       ESPNContents scheduleData = this.deserializeSchedule(apiJSON);
       this.addSuccessResponse(scheduleData);
       System.out.println(scheduleData);  // for testing purposes
-
     } catch (IOException | InterruptedException e) {
       this.responseMap.put("result", "error_datasource");
     }
@@ -77,18 +76,6 @@ public class SportsHandler implements Route {
       this.responseMap.put("date" + i, scheduleData.events().get(i).date());
       this.responseMap.put("link" + i, scheduleData.events().get(i).links());
     }
-  }
-
-  /**
-   * Returns ESPN's internal team ID for the given team.
-   *
-   * @param sportName the name of the sport
-   * @param leagueName the name of the league
-   * @param teamName the name of the team
-   * @return the ESPN internal team ID
-   */
-  private int getTeamID(String sportName, String leagueName, String teamName) {
-    return this.idConverter.getTeamID(sportName, leagueName, teamName);
   }
 
   /**
