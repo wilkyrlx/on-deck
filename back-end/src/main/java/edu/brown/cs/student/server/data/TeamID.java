@@ -3,7 +3,6 @@ package edu.brown.cs.student.server.data;
 import edu.brown.cs.student.server.data.ESPNTeams.Sport.League.TeamWrapper;
 import edu.brown.cs.student.server.handlers.SportsHandler;
 import edu.brown.cs.student.util.WebResponse;
-import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TeamID {
-  private final HashMap<String, String> teamNameToIDs = new HashMap<String, String>();
+  private final HashMap<String, String> teamNameToIDs = new HashMap<>();
 
   private TeamWrapper.Team extractTeam(TeamWrapper tw) {
     return tw.team();
@@ -25,7 +24,7 @@ public class TeamID {
       teamList.add(this.extractTeam(teamWrapper));
     }
     for (TeamWrapper.Team team: teamList) {
-      this.teamNameToIDs.put(team.displayName(), team.id());
+      this.teamNameToIDs.put(team.slug(), team.id());
     }
   }
 
