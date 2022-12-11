@@ -1,5 +1,6 @@
 import { Event } from '../model/Event'
 import { Sport } from '../model/Sport'
+import { Team } from '../model/Team';
 
 export const mockEvents: Event[] = [
     new Event(
@@ -18,6 +19,12 @@ export const mockEvents: Event[] = [
             addHours(new Date(), 7),
             Sport.NFL
     )
+]
+
+export const mockSavedTeams: Team[] = [
+    {
+        name: "Pittsburgh Steelers", iconUrl: "icon.url", sport: Sport.NFL
+    }
 ]
 
 function addHours(date: Date, hours: number){
