@@ -1,4 +1,5 @@
 import { mockSavedTeams } from "../data/mock"
+import { sportToString } from "../model/Sport";
 import { Team } from "../model/Team"
 import '../styles/Preferences.css';
 
@@ -19,7 +20,7 @@ function SavedTeamItem({ team, onRemove }: { team: Team, onRemove: () => void })
             <img src={team.iconUrl}/>
             <div className="team-item-text">
                 <p>{team.name}</p>
-                <p>{team.sport}</p>
+                <p>{sportToString(team.sport)}</p>
             </div>
         </div>
     )
