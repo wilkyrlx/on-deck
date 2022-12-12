@@ -75,7 +75,7 @@ public class SportsHandler implements Route {
     for (int i = 0; i < scheduleData.events().size(); i++) {
       this.responseMap.put("date" + i, scheduleData.events().get(i).date());
       this.responseMap.put("gameName" + i, scheduleData.events().get(i).name());
-      this.responseMap.put("link" + i, scheduleData.events().get(i).links());
+      this.responseMap.put("link" + i, scheduleData.events().get(i).links().get(0)); // first link
     }
   }
 
