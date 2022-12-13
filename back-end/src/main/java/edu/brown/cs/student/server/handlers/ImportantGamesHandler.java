@@ -22,6 +22,7 @@ public class ImportantGamesHandler implements Route {
   @Override
   public Object handle(Request request, Response response) {
     this.responseMap.clear();
-    return null;
+
+    return this.responseMap;
   }
 }
