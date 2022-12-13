@@ -1,5 +1,5 @@
 package edu.brown.cs.student.util;
 
-public class Prioritizer {
+public class Scorer {
   // TODO: write function to prioritize conflicting events
 }

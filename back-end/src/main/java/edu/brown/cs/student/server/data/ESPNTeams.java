@@ -7,12 +7,8 @@ public record ESPNTeams(List<Sport> sports) {
     public record League(List<TeamWrapper> teams) {
       public record TeamWrapper(Team team) {
         public record Team(String id, String slug, String color, List<Logo> logos, List<Link> links) {
-          public record Logo(String href) {
-
-          }
-          public record Link(String href) {
-
-          }
+          public record Logo(String href) {}
+          public record Link(String href) {}
         }
       }
     }

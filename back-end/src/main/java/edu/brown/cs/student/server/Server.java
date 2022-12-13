@@ -3,8 +3,10 @@ package edu.brown.cs.student.server;
 import static spark.Spark.after;
 
 import com.squareup.moshi.Moshi;
+import edu.brown.cs.student.server.handlers.ImportantGamesHandler;
 import edu.brown.cs.student.server.handlers.SportsHandler;
 import edu.brown.cs.student.server.handlers.DefaultHandler;
+import edu.brown.cs.student.util.Scorer;
 import spark.Spark;
 
 /**
@@ -22,6 +24,7 @@ public class Server {
    */
   public static void initializeServer() {
     Moshi moshi = new Moshi.Builder().build();
+    Scorer scorer = new Scorer();
 
     Spark.port(3232);
     /*
@@ -48,8 +51,8 @@ public class Server {
     });
 
     // Setting up the handler for the GET endpoints
-    Spark.get("sports", new SportsHandler(moshi));
-
+    Spark.get("sports", new SportsHandler(moshi, scorer));
+    Spark.get("important", new ImportantGamesHandler(moshi, scorer));
     /* Add new endpoints above this line.
     '*' is a catch-all, and endpoints are assigned in order of declaration */
     Spark.get("*", new DefaultHandler());

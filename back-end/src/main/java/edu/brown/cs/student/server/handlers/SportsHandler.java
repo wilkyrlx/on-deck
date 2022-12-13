@@ -4,6 +4,7 @@ import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import edu.brown.cs.student.server.data.ESPNContents;
 import edu.brown.cs.student.server.data.TeamID;
+import edu.brown.cs.student.util.Scorer;
 import edu.brown.cs.student.util.WebResponse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -22,17 +23,20 @@ public class SportsHandler implements Route {
   public final Moshi moshi;
   private final TeamID idConverter;
   private final Map<String, Object> responseMap;
+  private final Scorer scorer;
 
   /**
-   * Constructs a new instance of the SportsHandler with the singular Moshi instance,
-   * and new idConverter and Map instances.
-
-   *  @param moshi the shared moshi instance
+   * Constructs a new instance of the SportsHandler with the singular Moshi instance, and new
+   * idConverter and Map instances.
+   *
+   * @param moshi  the shared moshi instance
+   * @param scorer
    */
-  public SportsHandler(Moshi moshi) {
+  public SportsHandler(Moshi moshi, Scorer scorer) {
     this.moshi = moshi;
     this.idConverter = new TeamID(this);
     this.responseMap = new LinkedHashMap<>();
+    this.scorer = scorer;
   }
 
   /**
