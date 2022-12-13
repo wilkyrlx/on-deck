@@ -59,7 +59,6 @@ public class SportsHandler implements Route {
       String apiJSON = WebResponse.getWebResponse(fullURL).body();
       ESPNContents scheduleData = this.deserializeSchedule(apiJSON);
       this.addSuccessResponse(scheduleData);
-      System.out.println(scheduleData);  // for testing purposes
     } catch (IOException | InterruptedException e) {
       this.responseMap.put("result", "error_datasource");
     }
@@ -73,10 +72,13 @@ public class SportsHandler implements Route {
    * @param scheduleData the data deserialized from the API JSON
    */
   private void addSuccessResponse(@NotNull ESPNContents scheduleData) {
+    this.responseMap.put("result", "success");
     this.responseMap.put("displayName", scheduleData.team().displayName());
     this.responseMap.put("logo", scheduleData.team().logo());
     this.responseMap.put("recordSummary", scheduleData.team().recordSummary());
+    this.responseMap.put("color", scheduleData.team().color());
     for (int i = 0; i < scheduleData.events().size(); i++) {
+      this.responseMap.put("gameID" + i, scheduleData.events().get(i).id()); // ESPN Game ID
       this.responseMap.put("date" + i, scheduleData.events().get(i).date());
       this.responseMap.put("gameName" + i, scheduleData.events().get(i).name());
       this.responseMap.put("link" + i, scheduleData.events().get(i).links().get(0)); // first link
