@@ -14,11 +14,11 @@ import java.net.URL;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import spark.Spark;
 
 public class APITest {
@@ -89,7 +89,7 @@ public class APITest {
     return adapter.fromJson(jsonResp);
   }
 
-  /** Tests the general call for the Boston Celtics */
+  /** Tests the general call for the Boston Celtics (in the basketball league) */
   @Test
   public void testBasicCallCeltics() throws IOException {
     String exCall = "sports?sport=basketball&league=nba&team=boston-celtics";
@@ -100,7 +100,101 @@ public class APITest {
     assertEquals(response.get("displayName"),"Boston Celtics");
     assertEquals(response.get("logo"),"https://a.espncdn.com/i/teamlogos/nba/500/bos.png");
     assertEquals(response.get("color"),"006532");
+    assertEquals(((Map<String, String>)response.get("game5")).get("gameName"), "Washington Wizards at Boston Celtics");
     clientConnection.disconnect();
   }
 
+  /**
+   * Tests the general call for a team in the american football league
+   */
+  @Test
+  public void testBasicCallNfl() throws IOException {
+    String exCall = "sports?sport=football&league=nfl&team=pittsburgh-steelers";
+    HttpURLConnection clientConnection = tryRequest(exCall);
+    Map<String, Object> response = getResponse(clientConnection);
+
+    Assertions.assertNotNull(response);
+    assertEquals(response.get("displayName"),"Pittsburgh Steelers");
+    assertEquals(response.get("logo"),"https://a.espncdn.com/i/teamlogos/nfl/500/pit.png");
+    assertEquals(response.get("color"),"000000");
+    assertEquals(((Map<String, String>)response.get("game5")).get("gameName"), "Tampa Bay Buccaneers at Pittsburgh Steelers");
+    clientConnection.disconnect();
+  }
+
+  /**
+   * Tests the general call for a team in the american baseball league
+   */
+  @Test
+  public void testBasicCallMlb() throws IOException {
+    String exCall = "sports?sport=baseball&league=mlb&team=boston-red-sox";
+    HttpURLConnection clientConnection = tryRequest(exCall);
+    Map<String, Object> response = getResponse(clientConnection);
+
+    Assertions.assertNotNull(response);
+    assertEquals(response.get("displayName"),"Boston Red Sox");
+    assertEquals(response.get("logo"),"https://a.espncdn.com/i/teamlogos/mlb/500/bos.png");
+    assertEquals(response.get("color"),"00224b");
+    assertEquals(((Map<String, String>)response.get("game5")).get("gameName"), "Pittsburgh Pirates at Boston Red Sox");
+    clientConnection.disconnect();
+  }
+
+  /**
+   * Tests the general call for a team in the american hockey league
+   */
+  @Test
+  public void testBasicCallNhl() throws IOException {
+    String exCall = "sports?sport=hockey&league=nhl&team=boston-bruins";
+    HttpURLConnection clientConnection = tryRequest(exCall);
+    Map<String, Object> response = getResponse(clientConnection);
+
+    Assertions.assertNotNull(response);
+    assertEquals(response.get("displayName"),"Boston Bruins");
+    assertEquals(response.get("logo"),"https://a.espncdn.com/i/teamlogos/nhl/500/bos.png");
+    assertEquals(response.get("color"),"231f20");
+    assertEquals(((Map<String, String>)response.get("game5")).get("gameName"), "Minnesota Wild at Boston Bruins");
+    clientConnection.disconnect();
+  }
+
+  /**
+   * Tests the failure shown when a team does not exist
+   */
+  @Test
+  public void testTeamDoesntExist() throws IOException {
+    String exCall = "sports?sport=hockey&league=nhl&team=boston-hockey-players";
+    HttpURLConnection clientConnection = tryRequest(exCall);
+    Map<String, Object> response = getResponse(clientConnection);
+
+    Assertions.assertNotNull(response);
+    assertEquals(response.get("result"), "error_bad_request");
+    clientConnection.disconnect();
+  }
+
+
+  /**
+   * Tests the failure shown when a sport does not exist
+   */
+  @Test
+  public void testSportDoesntExist() throws IOException {
+    String exCall = "sports?sport=quidditch&league=nhl&team=boston-hockey-players";
+    HttpURLConnection clientConnection = tryRequest(exCall);
+    Map<String, Object> response = getResponse(clientConnection);
+
+    Assertions.assertNotNull(response);
+    assertEquals(response.get("result"), "error_bad_request");
+    clientConnection.disconnect();
+  }
+
+  /**
+   * Tests the failure shown when a league does not exist
+   */
+  @Test
+  public void testLeagueDoesntExist() throws IOException {
+    String exCall = "sports?sport=hockey&league=canadianhockey&team=boston-hockey-players";
+    HttpURLConnection clientConnection = tryRequest(exCall);
+    Map<String, Object> response = getResponse(clientConnection);
+
+    Assertions.assertNotNull(response);
+    assertEquals(response.get("result"), "error_bad_request");
+    clientConnection.disconnect();
+  }
 }

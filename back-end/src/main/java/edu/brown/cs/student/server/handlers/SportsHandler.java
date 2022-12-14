@@ -60,7 +60,7 @@ public class SportsHandler implements Route {
       ESPNContents scheduleData = this.deserializeSchedule(apiJSON);
       this.addSuccessResponse(scheduleData);
     } catch (IOException | InterruptedException e) {
-      this.responseMap.put("result", "error_datasource");
+      this.responseMap.put("result", "error_bad_request");
     }
     return moshi.adapter(Types.newParameterizedType(Map.class, String.class, Object.class))
         .toJson(this.responseMap);
