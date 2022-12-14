@@ -30,7 +30,7 @@ public final class SportsHandler implements Route {
    * idConverter and Map instances.
    *
    * @param moshi  the shared moshi instance
-   * @param scorer
+   * @param scorer a scorer to provide objective ranking of a game's "hype-level"
    */
   public SportsHandler(Moshi moshi, Scorer scorer) {
     this.moshi = moshi;
@@ -78,6 +78,7 @@ public final class SportsHandler implements Route {
     this.responseMap.put("recordSummary", scheduleData.team().recordSummary());
     this.responseMap.put("color", scheduleData.team().color());
     for (int i = 0; i < scheduleData.events().size(); i++) {
+      scorer.addEvent(scheduleData.events().get(i));
       Map<String, String> internalMap = new LinkedHashMap<>();
       internalMap.put("gameID", scheduleData.events().get(i).id()); // ESPN Game ID
       internalMap.put("gameDate", scheduleData.events().get(i).date());
