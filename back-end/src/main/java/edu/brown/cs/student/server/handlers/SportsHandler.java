@@ -77,6 +77,7 @@ public final class SportsHandler implements Route {
     this.responseMap.put("logo", scheduleData.team().logo());
     this.responseMap.put("recordSummary", scheduleData.team().recordSummary());
     this.responseMap.put("color", scheduleData.team().color());
+
     for (int i = 0; i < scheduleData.events().size(); i++) {
       scorer.addEvent(scheduleData.events().get(i));
       Map<String, String> internalMap = new LinkedHashMap<>();
