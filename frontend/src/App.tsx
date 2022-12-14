@@ -26,7 +26,7 @@ function App() {
                 <Preferences
                     savedTeams={savedTeams}
                     onRemoveTeam={(team) => setSavedTeams(savedTeams.filter(t => t !== team))}
-                    onAddTeam={() => false}/> }
+                    onAddTeam={(team) => setSavedTeams(savedTeams.concat(team))}/> }
             { view === pageView.MAIN &&
                 <FullCalendarApp events={mockEvents}/> }
 		</div>
