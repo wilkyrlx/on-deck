@@ -152,7 +152,7 @@ public class APITest {
     assertEquals(response.get("displayName"),"Boston Bruins");
     assertEquals(response.get("logo"),"https://a.espncdn.com/i/teamlogos/nhl/500/bos.png");
     assertEquals(response.get("color"),"231f20");
-    assertTrue(response.get("game5") instanceof Map<String, String>);
+    assertTrue(response.get("game5") instanceof Map);
     assertEquals(((Map<String, String>)response.get("game5")).get("gameName"), "Minnesota Wild at Boston Bruins");
     clientConnection.disconnect();
   }
