@@ -5,6 +5,7 @@ import { Preferences } from "./components/Preferences";
 import { Navigator } from "./components/Navigator";
 import { pageView } from "./types/pageView";
 import { mockEvents, mockSavedTeams } from './data/mock';
+import { MainCalendar } from './components/MainCalendar';
 
 export interface viewProps {
 	setView: Dispatch<SetStateAction<pageView>>,
@@ -28,7 +29,7 @@ function App() {
                     onRemoveTeam={(team) => setSavedTeams(savedTeams.filter(t => t !== team))}
                     onAddTeam={(team) => setSavedTeams(savedTeams.concat(team))}/> }
             { view === pageView.MAIN &&
-                <FullCalendarApp events={mockEvents}/> }
+                <MainCalendar events={mockEvents}/> }
 		</div>
 	);
 }
