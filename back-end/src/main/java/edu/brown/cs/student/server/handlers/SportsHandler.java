@@ -78,10 +78,12 @@ public class SportsHandler implements Route {
     this.responseMap.put("recordSummary", scheduleData.team().recordSummary());
     this.responseMap.put("color", scheduleData.team().color());
     for (int i = 0; i < scheduleData.events().size(); i++) {
-      this.responseMap.put("gameID" + i, scheduleData.events().get(i).id()); // ESPN Game ID
-      this.responseMap.put("date" + i, scheduleData.events().get(i).date());
-      this.responseMap.put("gameName" + i, scheduleData.events().get(i).name());
-      this.responseMap.put("link" + i, scheduleData.events().get(i).links().get(0).href()); // first link
+      Map<String, String> internalMap = new LinkedHashMap<>();
+      internalMap.put("gameID", scheduleData.events().get(i).id()); // ESPN Game ID
+      internalMap.put("gameDate", scheduleData.events().get(i).date());
+      internalMap.put("gameName", scheduleData.events().get(i).name());
+      internalMap.put("gameLink", scheduleData.events().get(i).links().get(0).href()); // first link
+      this.responseMap.put("game" + i, internalMap);
     }
   }
 
