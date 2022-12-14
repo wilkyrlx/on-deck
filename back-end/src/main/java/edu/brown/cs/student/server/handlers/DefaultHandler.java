@@ -10,7 +10,7 @@ import spark.Route;
 /**
  * When the API receives a GET request for a non-implemented endpoint, give out "error_bad_json".
  */
-public class DefaultHandler implements Route {
+public final class DefaultHandler implements Route {
   private final Map<String, Object> responseMap = new HashMap<>();
 
   /**

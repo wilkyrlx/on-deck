@@ -24,6 +24,6 @@ public class Scorer {
 
   public List<Event> getMostInterestingEvents(int count) {
     // TODO: write
-    return null;
+    return List.copyOf(this.eventScores.keySet());
   }
 }
