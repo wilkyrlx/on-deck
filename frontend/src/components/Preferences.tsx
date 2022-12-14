@@ -3,7 +3,10 @@ import { Team } from "../model/Team"
 import '../styles/Preferences.css';
 import {Cross1Icon} from "@radix-ui/react-icons";
 import {useState} from "react";
+
+// allows for mocking of saved teams
 import { mockSavedTeams } from "../data/mock";
+import { allTeams } from "../data/allTeams";
 
 export interface PreferencesProps {
     savedTeams: Team[],
@@ -23,7 +26,7 @@ function Preferences({savedTeams, onRemoveTeam, onAddTeam}: PreferencesProps) {
             )}
             <div className="add-teams">
                 <h1>Add Teams</h1>
-                <TeamSearch teams={mockSavedTeams.filter(t => !savedTeams.includes(t))} onAdd={onAddTeam}/>
+                <TeamSearch teams={allTeams.filter(t => !savedTeams.includes(t))} onAdd={onAddTeam}/>
             </div>
         </div>
     )

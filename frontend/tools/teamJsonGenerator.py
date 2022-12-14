@@ -1,5 +1,8 @@
 import json
  
+# NOTE: This script is used to parse the JSON file from the ESPN API. It is not
+# to be used without care, and is untested. It only serves as a simple tool to make
+# data cleaning easier
  
 # Function to parse JSON file and make a new JSON file
 # To clean output, use find+replace with following commands:

@@ -633,5 +633,7 @@ const mlb: Team[] = [
     }
 ];
 
+const allTeams = [...nfl, ...nba, ...nhl, ...mlb];
 
-export { nfl, nba, nhl, mlb };
+
+export { allTeams };
