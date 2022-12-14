@@ -5,7 +5,7 @@ import json
 # To clean output, use find+replace with following commands:
 # 1. "name" to name
 # 2. "iconUrl" to iconUrl
-# 3. "sport": "Sport.NFL" to sport: Sport.NFL
+# 3. "sport": "Sport.XXX" to sport: Sport.XXX
 
 # Takes the file paths as arguments
 def make_json(inputFilePath, outputFilePath):
@@ -15,11 +15,13 @@ def make_json(inputFilePath, outputFilePath):
     with open(inputFilePath, 'r', encoding='utf-8') as f:
         my_data = json.load(f)
 
+        teams_list = my_data['sports'][0]['leagues'][0]
 
-        for i in my_data['teams']:
+
+        for i in teams_list['teams']:
             displayName = i['team']['displayName']
             icon  = i['team']['logos'][2]['href']
-            newTeam = {"name": displayName, "iconUrl": icon, "sport": "Sport.NFL"}
+            newTeam = {"name": displayName, "iconUrl": icon, "sport": "Sport.MLB"}
             fullData.append(newTeam)
 
     f.close()
