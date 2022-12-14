@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import { viewProps } from '../App';
 import '../styles/Navigator.css';
 import { pageView } from '../types/pageView';

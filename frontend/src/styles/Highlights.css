@@ -1,0 +1,15 @@
+.highlights-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.highlight {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+}
