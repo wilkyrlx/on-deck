@@ -81,7 +81,7 @@ public class SportsHandler implements Route {
       this.responseMap.put("gameID" + i, scheduleData.events().get(i).id()); // ESPN Game ID
       this.responseMap.put("date" + i, scheduleData.events().get(i).date());
       this.responseMap.put("gameName" + i, scheduleData.events().get(i).name());
-      this.responseMap.put("link" + i, scheduleData.events().get(i).links().get(0)); // first link
+      this.responseMap.put("link" + i, scheduleData.events().get(i).links().get(0).href()); // first link
     }
   }
 
