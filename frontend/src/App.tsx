@@ -4,7 +4,7 @@ import FullCalendarApp from "./components/Calendar";
 import { Preferences } from "./components/Preferences";
 import { Navigator } from "./components/Navigator";
 import { pageView } from "./types/pageView";
-import { mockEvents } from './data/mock';
+import { mockEvents, mockSavedTeams } from './data/mock';
 
 export interface viewProps {
 	setView: Dispatch<SetStateAction<pageView>>,
@@ -17,12 +17,18 @@ function App() {
 
 	// determines which tab to open
 	const [view, setView] = useState<pageView>(pageView.MAIN)
+    const [savedTeams, setSavedTeams] = useState(mockSavedTeams)
 
 	return (
 		<div className="app">
 			<Navigator setView={setView} view={view} />
-			{ view === pageView.PREFERENCES && <Preferences /> }
-            { view === pageView.MAIN && <FullCalendarApp events={mockEvents}/> }
+            { view === pageView.PREFERENCES &&
+                <Preferences
+                    savedTeams={savedTeams}
+                    onRemoveTeam={(team) => setSavedTeams(savedTeams.filter(t => t !== team))}
+                    onAddTeam={() => false}/> }
+            { view === pageView.MAIN &&
+                <FullCalendarApp events={mockEvents}/> }
 		</div>
 	);
 }

@@ -22,9 +22,8 @@ export const mockEvents: Event[] = [
 ]
 
 export const mockSavedTeams: Team[] = [
-    {
-        name: "Pittsburgh Steelers", iconUrl: "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png", sport: Sport.NFL
-    }
+    { name: "Pittsburgh Steelers", iconUrl: "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png", sport: Sport.NFL },
+    { name: "Baltimore Ravens", iconUrl: "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png", sport: Sport.NFL }
 ]
 
 function addHours(date: Date, hours: number){
