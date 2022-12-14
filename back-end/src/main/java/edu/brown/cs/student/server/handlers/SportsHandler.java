@@ -17,7 +17,7 @@ import spark.Route;
 /**
  * A class to handle <em>sports</em> requests to the backend. Pulls from the ESPN API.
  */
-public class SportsHandler implements Route {
+public final class SportsHandler implements Route {
   public static final String API_URL_STUB = "https://site.api.espn.com/apis/site/v2/sports/";
   // example: http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/15/schedule
   public final Moshi moshi;

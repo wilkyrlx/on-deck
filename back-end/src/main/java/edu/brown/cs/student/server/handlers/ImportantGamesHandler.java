@@ -8,7 +8,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-public class ImportantGamesHandler implements Route {
+public final class ImportantGamesHandler implements Route {
   private final Moshi moshi;
   private final Scorer scorer;
   private final Map<String, Object> responseMap;

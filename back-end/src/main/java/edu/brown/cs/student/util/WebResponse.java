@@ -6,7 +6,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class WebResponse {
+/**
+ * A class containing utility functions for accessing and gathering data from websites.
+ */
+public final class WebResponse {
   /**
    * Makes an HTTP Request to the given URL and returns the corresponding HTTP Response.
 
