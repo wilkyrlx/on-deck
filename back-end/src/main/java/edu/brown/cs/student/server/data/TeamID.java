@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TeamID {
-  private final HashMap<String, String> teamNameToIDs = new HashMap<>();
+  private final Map<String, String> teamNameToIDs = new HashMap<>();
 
   private TeamWrapper.Team extractTeam(TeamWrapper tw) {
     return tw.team();

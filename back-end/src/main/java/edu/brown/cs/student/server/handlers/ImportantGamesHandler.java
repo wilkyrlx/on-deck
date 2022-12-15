@@ -1,8 +1,8 @@
 package edu.brown.cs.student.server.handlers;
 
+import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import edu.brown.cs.student.server.data.ESPNContents.Event;
-import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.util.Scorer;
 import java.util.LinkedHashMap;
 import java.util.List;
