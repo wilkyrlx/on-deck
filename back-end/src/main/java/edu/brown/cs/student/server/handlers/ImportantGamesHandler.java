@@ -11,17 +11,29 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/**
+ * A class to handle <em>important</em> requests to the backend.
+ */
 public final class ImportantGamesHandler implements Route {
   private final Moshi moshi;
   private final Scorer scorer;
   private final Map<String, Object> responseMap;
 
+  /**
+   * Constructs a new instance of the ImportantGamesHandler.
+
+   * @param moshi the Moshi instance shared by the server
+   * @param scorer scores the games based on importance/interest
+   */
   public ImportantGamesHandler(Moshi moshi, Scorer scorer) {
     this.moshi = moshi;
     this.scorer = scorer;
     this.responseMap = new LinkedHashMap<>();
   }
 
+  /**
+   * Handles a request from the backend. Should have a response for the <em>count</em> query.
+   */
   @Override
   public Object handle(Request request, Response response) {
     this.responseMap.clear();
@@ -36,6 +48,11 @@ public final class ImportantGamesHandler implements Route {
         .toJson(this.responseMap);
   }
 
+  /**
+   * Adds all the events in the list to the responseMap field.
+
+   * @param mostInteresting a list of all the most interesting events
+   */
   private void addEventsToMap(List<Event> mostInteresting) {
     if (mostInteresting != null) {
       this.responseMap.put("result", "success");

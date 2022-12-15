@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import edu.brown.cs.student.server.handlers.DefaultHandler;
+import edu.brown.cs.student.server.handlers.ImportantGamesHandler;
 import edu.brown.cs.student.server.handlers.SportsHandler;
 import edu.brown.cs.student.util.Scorer;
 import java.io.IOException;
@@ -39,6 +40,7 @@ public class APITest {
   @BeforeEach
   public void setup() {
     Spark.get("sports", new SportsHandler(moshi, s));
+    Spark.get("important", new ImportantGamesHandler(moshi, s));
     Spark.get("*", new DefaultHandler());
     Spark.init();
     Spark.awaitInitialization(); // don't continue until the server is listening
