@@ -3,9 +3,10 @@ package edu.brown.cs.student.util;
 import edu.brown.cs.student.server.data.ESPNContents.Event;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Map.Entry;
 
 /**
  * A class to score all the Events based on how interesting they are.
@@ -49,14 +50,9 @@ public final class Scorer {
    */
   public List<Event> getMostInterestingEvents(int count) {
     // TODO: test this!!
-    // from https://stackoverflow.com/a/19671853
-    Map<Event, Integer> sortedMap =
-        this.eventScores.entrySet().stream()
-            .sorted(Map.Entry.comparingByValue())
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                (e1, e2) -> e1, LinkedHashMap::new));  // need to reverse??
+    Map<Event, Integer> sortedMap = this.sortByComparator(this.eventScores);
 
-    List<Event> allEvents = List.copyOf(this.eventScores.keySet());
+    List<Event> allEvents = List.copyOf(sortedMap.keySet());
     List<Event> topEventsList = new ArrayList<>();
 
     for (int i = 0; i < count && i < allEvents.size(); i++) {
@@ -64,6 +60,19 @@ public final class Scorer {
     }
     return List.copyOf(topEventsList);  // defensive programming
   }
+
+  private Map<Event, Integer> sortByComparator(Map<Event, Integer> unsortMap) {
+    // from https://stackoverflow.com/a/19671853
+    List<Entry<Event, Integer>> list = new LinkedList<>(unsortMap.entrySet());
+    list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+
+    Map<Event, Integer> sortedMap = new LinkedHashMap<>();
+    for (Entry<Event, Integer> entry : list) {
+      sortedMap.put(entry.getKey(), entry.getValue());
+    }
+    return sortedMap;
+  }
+
 
 
 }
