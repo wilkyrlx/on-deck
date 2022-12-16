@@ -1,6 +1,7 @@
 import { Event } from '../model/Event';
 import '../styles/Highlights.css';
 import { accessibleEvent } from './MainCalendar';
+import {Shimmer} from "react-shimmer";
 
 export const TEXT_highlighted_games_name = 'Highlighted Games'
 
@@ -9,21 +10,15 @@ export const TEXT_highlighted_games_name = 'Highlighted Games'
  * Display the top 3 events based on our weighted addition alogrithm 
  * @param events - a list of events to display in the highlights bar 
  */
-function Highlights({ events }: { events: Event[] }) {
-
-    // TODO: add some way to avoid errors with not enough events
-    // TODO: need to get top 3, will depend on backend
-    const event1: Event = events[0];
-    const event2: Event = events[1];
-    const event3: Event = events[2];
-
+function Highlights({ events }: { events: Event[] | null }) {
+    const highlightsItems = (events == null)
+    ? [0, 1, 2].map(i => <Shimmer height={64} width={256} className="highlight"/>)
+    : events.map(e => <HighlightItem event={e}/>)
     return (
         <div aria-label={TEXT_highlighted_games_name} >
             <h3 style={{textAlign: 'center'}}>{TEXT_highlighted_games_name}</h3>
             <div className='highlights-bar'>
-                <HighlightItem event={event1} />
-                <HighlightItem event={event2} />
-                <HighlightItem event={event3} />
+                {highlightsItems}
             </div>
         </div>
     )

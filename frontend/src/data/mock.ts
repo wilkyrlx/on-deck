@@ -3,12 +3,15 @@ import { Sport } from '../model/Sport'
 import { Team } from '../model/Team';
 
 // @ts-ignore
+// delay used from https://stackoverflow.com/questions/38956121/how-to-add-delay-to-promise-inside-then
 export class MockRepository implements  EventsRepository {
-    getEvents(teamPreferences: Team[]): Event[] {
-        return mockEvents
+    getEvents(teamPreferences: Team[]): Promise<Event[]> {
+        return new Promise(resolve => setTimeout(resolve, 400))
+        .then(() => mockEvents)
     }
-    getHighlightGames(teamPreferences: Team[]): Event[] {
-        return mockEvents
+    getHighlightGames(teamPreferences: Team[]): Promise<Event[]> {
+        return new Promise(resolve => setTimeout(resolve, 400))
+        .then(() => mockEvents)
     }
 }
 

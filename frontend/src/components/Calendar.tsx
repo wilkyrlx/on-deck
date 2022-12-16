@@ -19,7 +19,6 @@ function accessibleCalendarView(events: Event[]): string {
   return fullLabel;
 }
 
-//TODO: maybe remove week view since bad rendering w/ new event
 function FullCalendarApp({ events }: { events: Event[] }) {
   const convertedEvents = events.map(e => convertToCalendarEvent(e))
   return (
