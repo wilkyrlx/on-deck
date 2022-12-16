@@ -5,6 +5,7 @@ import com.squareup.moshi.Types;
 import edu.brown.cs.student.server.data.ESPNContents;
 import edu.brown.cs.student.server.data.TeamID;
 import edu.brown.cs.student.util.Scorer;
+import edu.brown.cs.student.util.ServerFailureException;
 import edu.brown.cs.student.util.WebResponse;
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -34,7 +35,11 @@ public final class SportsHandler implements Route {
    */
   public SportsHandler(Moshi moshi, Scorer scorer) {
     this.moshi = moshi;
-    this.idConverter = new TeamID(this);
+    try {
+      this.idConverter = new TeamID(this);
+    } catch (ServerFailureException e) {
+      throw new RuntimeException(e);
+    }
     this.responseMap = new LinkedHashMap<>();
     this.scorer = scorer;
   }

@@ -2,6 +2,7 @@ package edu.brown.cs.student.server.data;
 
 import edu.brown.cs.student.server.data.ESPNTeams.Sport.League.TeamWrapper;
 import edu.brown.cs.student.server.handlers.SportsHandler;
+import edu.brown.cs.student.util.ServerFailureException;
 import edu.brown.cs.student.util.WebResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,13 +36,12 @@ public final class TeamID {
     }
   }
 
-
   /**
    * Constructor for the TeamID class.
 
    * @param sportsHandler takes in a SportHandler for access to Moshi
    */
-  public TeamID(SportsHandler sportsHandler) {
+  public TeamID(SportsHandler sportsHandler) throws ServerFailureException {
     final String API_URL_STUB = "https://site.api.espn.com/apis/site/v2/sports/";
     final List<String> leagueList = Arrays.asList(
         "football/nfl", "baseball/mlb", "basketball/nba", "hockey/nhl"
@@ -55,11 +55,11 @@ public final class TeamID {
         if (ESPNRes != null && ESPNRes.sports() != null) {
           this.constructHashMap(ESPNRes);
         } else {
-          throw new RuntimeException();
+          throw new ServerFailureException("ESPN Response was null");
         }
       }
     } catch (IOException | InterruptedException e) {
-        // TODO: error handle
+      throw new ServerFailureException("API could not be reached");
     }
   }
 
