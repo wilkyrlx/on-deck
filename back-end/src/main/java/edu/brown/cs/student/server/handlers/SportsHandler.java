@@ -26,7 +26,6 @@ public final class SportsHandler implements Route {
   // example: http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/15/schedule
   public final Moshi moshi;
   private final TeamID idConverter;
-  private final Map<String, Object> responseMap;
   private final Scorer scorer;
 
   /**
@@ -43,7 +42,6 @@ public final class SportsHandler implements Route {
     } catch (ServerFailureException e) {
       throw new RuntimeException(e);
     }
-    this.responseMap = new LinkedHashMap<>();
     this.scorer = scorer;
   }
 
@@ -53,7 +51,7 @@ public final class SportsHandler implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
-    this.responseMap.clear();
+    Map<String, Object> responseMap = new LinkedHashMap<>();
 
     String sportName = request.queryParams("sport");
     String leagueName = request.queryParams("league");
@@ -66,43 +64,42 @@ public final class SportsHandler implements Route {
           + leagueName + "/teams/" + teamID + "/schedule";
       String apiJSON = WebResponse.getWebResponse(fullURL).body();
       ESPNContents scheduleData = this.deserializeSchedule(apiJSON);
-      this.addSuccessResponse(scheduleData, sportName, leagueName);
+      this.addSuccessResponse(scheduleData, responseMap);
     } catch (IOException | InterruptedException | ServerFailureException e) {
-      this.responseMap.put("result", "error_bad_request");
+      responseMap.put("result", "error_bad_request");
     }
     return moshi.adapter(Types.newParameterizedType(Map.class, String.class, Object.class))
-        .toJson(this.responseMap);
+        .toJson(responseMap);
   }
 
   /**
    * Modifies the responseMap to have all the relevant data pulled from the API.
-
+   *
    * @param scheduleData the data deserialized from the API JSON
    * @throws ServerFailureException if the game cannot be scored
    */
-  private void addSuccessResponse(ESPNContents scheduleData, String sportName, String leagueName)
+  private void addSuccessResponse(ESPNContents scheduleData, Map<String, Object> responseMap)
       throws ServerFailureException {
-    this.responseMap.put("result", "success");
-    this.responseMap.put("displayName", scheduleData.team().displayName());
+    List<Map<String, String>> listOfMaps =  new ArrayList<>();
+    responseMap.put("result", "success");
+    responseMap.put("displayName", scheduleData.team().displayName());
 
     for (Event event : scheduleData.events()) {
-      List<String> responseList = List.of(
-          event.date(), event.name(), event.id(), event.links().get(0).href()
-      );
-      for (Competitor c : event.competitions().get(0).competitors()) {
-        if (c.homeAway().equals("home")) {}
+      Map<String, String> innerMap = new LinkedHashMap<>(Map.of(
+          "date", event.date(), "name", event.name(),
+          "id", event.id(), "link", event.links().get(0).href()
+      ));
+      Competitor firstTeam = event.competitions().get(0).competitors().get(0);
+      if (firstTeam.homeAway().equals("home")) {  // add the home team, then the away team
+        innerMap.put("homeTeamName", firstTeam.team().displayName());
+        innerMap.put("awayTeamName", event.competitions().get(0).competitors().get(1).team().displayName());
+      } else {
+        innerMap.put("homeTeamName", event.competitions().get(0).competitors().get(1).team().displayName());
+        innerMap.put("awayTeamName", firstTeam.team().displayName());
       }
+      listOfMaps.add(innerMap);
     }
-
-    for (int i = 0; i < scheduleData.events().size(); i++) {
-//      scorer.addEvent(scheduleData.events().get(i), sportName, leagueName);
-      Map<String, String> internalMap = new LinkedHashMap<>();
-      internalMap.put("gameID", scheduleData.events().get(i).id()); // ESPN Game ID
-      internalMap.put("gameDate", scheduleData.events().get(i).date());
-      internalMap.put("gameName", scheduleData.events().get(i).name());
-      internalMap.put("gameLink", scheduleData.events().get(i).links().get(0).href()); // first link
-      this.responseMap.put("game" + i, internalMap);
-    }
+    responseMap.put("eventList", listOfMaps);
   }
 
   /**
