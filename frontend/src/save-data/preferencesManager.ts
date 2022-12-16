@@ -1,10 +1,18 @@
-import { Team } from "../model/Team";
+import { Team, teamToCookie } from "../model/Team";
 import { getCookie, setCookie } from "./cookieManager";
 
+/**
+ * load preferences into cookies
+ * @param savedTeams  - array of teams to save, based on current state
+ */
 function loadPreferencesCookie(savedTeams: Team[]) {
-    // load preferences into cookies
-	// TODO: add a tostring override for team[]
-	setCookie("preferences", savedTeams.length.toString())	
+
+    const cookieBuilder: string[] = [];
+    savedTeams.forEach(team => {
+        cookieBuilder.push(teamToCookie(team));
+    });
+
+	setCookie("preferences", cookieBuilder.toString())	
 }
 
 function sendPreferencesRequest() {

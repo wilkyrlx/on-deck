@@ -6,7 +6,7 @@ import { Navigator } from "./components/Navigator";
 import { pageView } from "./types/pageView";
 import { MockRepository } from './data/mock';
 import { MainCalendar } from './components/MainCalendar';
-import { Team } from './model/Team';
+import { cookieToTeam, Team } from './model/Team';
 import { setCookie } from './save-data/cookieManager';
 import { loadPreferencesCookie, sendPreferencesRequest } from './save-data/preferencesManager';
 import {EventsRepository} from "./data/EventsRepository";
@@ -51,6 +51,7 @@ function App() {
 
 	return (
 		<div className="app">
+			<button onClick={() => cookieToTeam('football|NFL|new-england-patriots')}>cookie</button>
 			<Navigator setView={setView} view={view} />
             { view === pageView.PREFERENCES &&
                 <Preferences
