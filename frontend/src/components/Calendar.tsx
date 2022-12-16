@@ -1,3 +1,4 @@
+import '../styles/CalendarEvent.css';
 import FullCalendar, { EventInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -24,13 +25,11 @@ function FullCalendarApp({ events }: { events: Event[] }) {
   return (
     <div className="calendar" aria-label ={accessibleCalendarView(events)} style={{paddingTop: 20}}>
       <FullCalendar
+        eventClassNames={"raw-calendar-event"}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="timeGridDay"
-        headerToolbar={{
-          center: 'timeGridWeek,timeGridDay',
-        }}
         events={convertedEvents}
-        eventColor="green"
+        eventColor="#76828d"
         nowIndicator
         dateClick={(e) => console.log(e.dateStr)}
         eventClick={(e) => console.log(e.event.id)}
