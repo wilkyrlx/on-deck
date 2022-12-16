@@ -25,11 +25,24 @@ public record ESPNContents(Team team, List<Event> events) {
    * @param date the data and time (in GMT) of the game
    * @param name the name of the game ("Team One at Team Two")
    * @param id the ESPN internal game ID
+   * @param competitions the competition of the event
    */
   public record Event(List<Link> links, String date, String name, String id,
       List<Competition> competitions) {
 
+    /**
+     * Information about the competition of the event.
+
+     * @param competitors a list of Competitors
+     */
     public record Competition(List<Competitor> competitors) {
+
+      /**
+       * A team competing in the event.
+
+       * @param homeAway either "home" or "away"
+       * @param team information about the team playing
+       */
       public record Competitor(String homeAway, Team team){}
     }
 

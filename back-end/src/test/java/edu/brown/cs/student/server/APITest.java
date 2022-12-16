@@ -13,6 +13,7 @@ import edu.brown.cs.student.util.Scorer;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ import spark.Spark;
 
 public class APITest {
   private static final Moshi moshi = new Moshi.Builder().build();
-  private static final Scorer s = new Scorer();
+  private static final Scorer s = new Scorer(moshi);
 
   @BeforeAll
   public static void setup_before_everything() {
@@ -100,10 +101,15 @@ public class APITest {
     Map<String, Object> response = getResponse(clientConnection);
 
     Assertions.assertNotNull(response);
+    assertTrue(response.get("eventList") instanceof List);
+    List<Map<String, String>> eventList = (List<Map<String, String>>)response.get("eventList");
+    
+    assertEquals(response.get("result"), "success");
     assertEquals(response.get("displayName"),"Boston Celtics");
-    assertEquals(response.get("logo"),"https://a.espncdn.com/i/teamlogos/nba/500/bos.png");
-    assertEquals(response.get("color"),"006532");
-    assertEquals(((Map<String, String>)response.get("game5")).get("gameName"), "Washington Wizards at Boston Celtics");
+    assertEquals(eventList.get(0).get("name"),
+        "Philadelphia 76ers at Boston Celtics");
+    assertEquals(eventList.get(1).get("homeTeamName"),
+        "Miami Heat");
     clientConnection.disconnect();
   }
 
