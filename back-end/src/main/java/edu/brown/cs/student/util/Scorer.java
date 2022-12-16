@@ -58,7 +58,7 @@ public final class Scorer {
       ESPNOdds odds = this.deserializeOddsRecord(apiJSON);
       return this.calculateScore(odds, sportName);
     } catch (IOException | InterruptedException e) {
-      throw new ServerFailureException("Scoring event's interest failure");
+      return 0.0; // default score if odds can't be reached
     }
   }
 
