@@ -64,9 +64,9 @@ public final class Scorer {
 
   private Double calculateScore(ESPNOdds odds, String sportName) {
     double baselineOvUnd = averageOverUnder.get(sportName);
-    double ovUndDifference = Math.abs(odds.items().get(0).overUnder() - baselineOvUnd);
-    double spread = Math.abs(odds.items().get(0).spread());
-    return ovUndDifference + spread;
+    double ovUndDifference = odds.items().get(0).overUnder() - baselineOvUnd; // higher is more interest
+    double spread = Math.abs(odds.items().get(0).spread()); // closer to 0 is more interest
+    return 1.5 * ovUndDifference - spread;
   }
 
   /**
