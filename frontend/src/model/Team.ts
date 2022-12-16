@@ -5,7 +5,3 @@ export interface Team {
     iconUrl: string
     sport: Sport
 }
-
-export interface ESPNTeam extends Team {
-    id: number
-}
