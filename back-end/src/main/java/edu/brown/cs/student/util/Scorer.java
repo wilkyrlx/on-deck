@@ -60,6 +60,13 @@ public final class Scorer {
     }
   }
 
+  /**
+   * Calculates the score of how interesting a game is
+
+   * @param odds the betting odds from the ESPN API
+   * @param sportName the name of the sport ("baseball", "hockey", etc.)
+   * @return a double representing the interest score of the game (higher is more interest)
+   */
   private Double calculateScore(ESPNOdds odds, String sportName) {
     double baselineOvUnd = averageOverUnder.get(sportName);
     double ovUndDiff = odds.items().get(0).overUnder() - baselineOvUnd; // higher is more interest
@@ -95,7 +102,7 @@ public final class Scorer {
     for (Entry<Event, Double> entry : list) {
       sortedMap.put(entry.getKey(), entry.getValue());
     }
-    return sortedMap;
+    return Map.copyOf(sortedMap);
   }
 
   private ESPNOdds deserializeOddsRecord(String json) throws IOException {

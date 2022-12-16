@@ -14,11 +14,9 @@ public record ESPNContents(Team team, List<Event> events) {
    * All the information about a team that we care about.
 
    * @param displayName their full name
-   * @param logo a link to their logo
-   * @param recordSummary their current win-loss record
-   * @param color the primary team color, as a hex code
    */
-  public record Team(String displayName, String logo, String recordSummary, String color) {}
+  public record Team(String displayName) {
+  }
 
   /**
    * All the information about an event that we care about.
@@ -28,7 +26,12 @@ public record ESPNContents(Team team, List<Event> events) {
    * @param name the name of the game ("Team One at Team Two")
    * @param id the ESPN internal game ID
    */
-  public record Event(List<Link> links, String date, String name, String id) {
+  public record Event(List<Link> links, String date, String name, String id,
+      List<Competition> competitions) {
+
+    public record Competition(List<Competitor> competitors) {
+      public record Competitor(String homeAway, Team team){}
+    }
 
     /**
      * A link to the gamecast.

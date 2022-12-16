@@ -3,14 +3,17 @@ package edu.brown.cs.student.server.handlers;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import edu.brown.cs.student.server.data.ESPNContents;
+import edu.brown.cs.student.server.data.ESPNContents.Event;
+import edu.brown.cs.student.server.data.ESPNContents.Event.Competition.Competitor;
 import edu.brown.cs.student.server.data.TeamID;
 import edu.brown.cs.student.util.Scorer;
 import edu.brown.cs.student.util.ServerFailureException;
 import edu.brown.cs.student.util.WebResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import org.jetbrains.annotations.NotNull;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -77,16 +80,22 @@ public final class SportsHandler implements Route {
    * @param scheduleData the data deserialized from the API JSON
    * @throws ServerFailureException if the game cannot be scored
    */
-  private void addSuccessResponse(@NotNull ESPNContents scheduleData, String sportName, String leagueName)
+  private void addSuccessResponse(ESPNContents scheduleData, String sportName, String leagueName)
       throws ServerFailureException {
     this.responseMap.put("result", "success");
     this.responseMap.put("displayName", scheduleData.team().displayName());
-    this.responseMap.put("logo", scheduleData.team().logo());
-    this.responseMap.put("recordSummary", scheduleData.team().recordSummary());
-    this.responseMap.put("color", scheduleData.team().color());
+
+    for (Event event : scheduleData.events()) {
+      List<String> responseList = List.of(
+          event.date(), event.name(), event.id(), event.links().get(0).href()
+      );
+      for (Competitor c : event.competitions().get(0).competitors()) {
+        if (c.homeAway().equals("home")) {}
+      }
+    }
 
     for (int i = 0; i < scheduleData.events().size(); i++) {
-      scorer.addEvent(scheduleData.events().get(i), sportName, leagueName);
+//      scorer.addEvent(scheduleData.events().get(i), sportName, leagueName);
       Map<String, String> internalMap = new LinkedHashMap<>();
       internalMap.put("gameID", scheduleData.events().get(i).id()); // ESPN Game ID
       internalMap.put("gameDate", scheduleData.events().get(i).date());
