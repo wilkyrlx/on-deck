@@ -19,7 +19,7 @@ import spark.Route;
  * A class to handle <em>sports</em> requests to the backend. Pulls from the ESPN API.
  */
 public final class SportsHandler implements Route {
-  public static final String API_URL_STUB = "https://site.api.espn.com/apis/site/v2/sports/";
+  public static final String API_URL_STUB_SCHED = "https://site.api.espn.com/apis/site/v2/sports/";
   // example: http://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/15/schedule
   public final Moshi moshi;
   private final TeamID idConverter;
@@ -59,12 +59,12 @@ public final class SportsHandler implements Route {
     String teamID = this.idConverter.getTeamID(teamName);
 
     try {
-      String fullURL = API_URL_STUB + sportName + "/"
+      String fullURL = API_URL_STUB_SCHED + sportName + "/"
           + leagueName + "/teams/" + teamID + "/schedule";
       String apiJSON = WebResponse.getWebResponse(fullURL).body();
       ESPNContents scheduleData = this.deserializeSchedule(apiJSON);
-      this.addSuccessResponse(scheduleData);
-    } catch (IOException | InterruptedException e) {
+      this.addSuccessResponse(scheduleData, sportName, leagueName);
+    } catch (IOException | InterruptedException | ServerFailureException e) {
       this.responseMap.put("result", "error_bad_request");
     }
     return moshi.adapter(Types.newParameterizedType(Map.class, String.class, Object.class))
@@ -75,8 +75,10 @@ public final class SportsHandler implements Route {
    * Modifies the responseMap to have all the relevant data pulled from the API.
 
    * @param scheduleData the data deserialized from the API JSON
+   * @throws ServerFailureException if the game cannot be scored
    */
-  private void addSuccessResponse(@NotNull ESPNContents scheduleData) {
+  private void addSuccessResponse(@NotNull ESPNContents scheduleData, String sportName, String leagueName)
+      throws ServerFailureException {
     this.responseMap.put("result", "success");
     this.responseMap.put("displayName", scheduleData.team().displayName());
     this.responseMap.put("logo", scheduleData.team().logo());
@@ -84,7 +86,7 @@ public final class SportsHandler implements Route {
     this.responseMap.put("color", scheduleData.team().color());
 
     for (int i = 0; i < scheduleData.events().size(); i++) {
-      scorer.addEvent(scheduleData.events().get(i));
+      scorer.addEvent(scheduleData.events().get(i), sportName, leagueName);
       Map<String, String> internalMap = new LinkedHashMap<>();
       internalMap.put("gameID", scheduleData.events().get(i).id()); // ESPN Game ID
       internalMap.put("gameDate", scheduleData.events().get(i).date());

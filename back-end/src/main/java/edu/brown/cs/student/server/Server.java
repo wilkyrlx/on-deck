@@ -24,7 +24,7 @@ public class Server {
    */
   public static void initializeServer() {
     Moshi moshi = new Moshi.Builder().build();
-    Scorer scorer = new Scorer();
+    Scorer scorer = new Scorer(moshi);
 
     Spark.port(3232);
     /*
