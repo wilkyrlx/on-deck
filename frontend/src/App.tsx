@@ -23,7 +23,7 @@ function App() {
 	// FIXME: component mounts twice because index.tsx has react.strictmode. see https://stackoverflow.com/questions/61254372/my-react-component-is-rendering-twice-because-of-strict-mode/61897567#61897567
 	// runs when the component is mounted (only once)
 	useEffect(() => {
-		console.log('iniitializing app - sending request to server');
+		console.log('initializing app - sending request to server');
 		sendPreferencesRequest();
 	  }, []);
   

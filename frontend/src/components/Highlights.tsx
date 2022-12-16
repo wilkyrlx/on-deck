@@ -1,5 +1,8 @@
 import { Event } from '../model/Event';
 import '../styles/Highlights.css';
+import { accessibleEvent } from './MainCalendar';
+
+export const TEXT_highlighted_games_name = 'Highlighted Games'
 
 
 /**
@@ -15,8 +18,8 @@ function Highlights({ events }: { events: Event[] }) {
     const event3: Event = events[2];
 
     return (
-        <div>
-            <h3 style={{textAlign: 'center'}}>Highlighted Games</h3>
+        <div aria-label={TEXT_highlighted_games_name} >
+            <h3 style={{textAlign: 'center'}}>{TEXT_highlighted_games_name}</h3>
             <div className='highlights-bar'>
                 <HighlightItem event={event1} />
                 <HighlightItem event={event2} />
@@ -32,7 +35,7 @@ function Highlights({ events }: { events: Event[] }) {
  */
 function HighlightItem({ event }: { event: Event }) {
     return (
-        <div className="highlight">
+        <div className="highlight" aria-label={accessibleEvent(event)}>
             <b>{event.timeRange()}</b>
             <p>{event.title()}</p>
         </div>

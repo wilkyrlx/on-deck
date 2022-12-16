@@ -8,6 +8,9 @@ import {useState} from "react";
 import { mockSavedTeams } from "../data/mock";
 import { allTeams } from "../data/allTeams";
 
+export const TEXT_search_name = 'Search for team by name';
+
+
 export interface PreferencesProps {
     savedTeams: Team[],
     onRemoveTeam: (team: Team) => void,
@@ -43,7 +46,7 @@ function SavedTeamItem({ team, onRemove }: { team: Team, onRemove: () => void })
 
 function TeamItem({ team, onClick }: { team: Team, onClick: () => void }) {
     return (
-        <div className="team-item" onClick={onClick}>
+        <div className="team-item" onClick={onClick} aria-label={team.name}>
             <img src={team.iconUrl} alt=""/>
             <div className="team-item-text">
                 <p className="team-item-name">{team.name}</p>
@@ -57,8 +60,8 @@ function TeamSearch({ teams, onAdd }:{ teams: Team[], onAdd: (team: Team) => voi
     const [ searchTerm, setSearchTerm ] = useState("")
     const results = teams.filter(t => t.name.toLowerCase().includes(searchTerm.toLowerCase()))
     return (
-        <div className="search-wrapper">
-            <input className="add-teams-search" placeholder="Search teams" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+        <div className="search-wrapper" aria-label={TEXT_search_name}>
+            <input className="add-teams-search" placeholder={TEXT_search_name} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
             { searchTerm.length > 0 &&
                 <div className="search-results">
                     { results.map(team =>
