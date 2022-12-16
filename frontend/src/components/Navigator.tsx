@@ -12,7 +12,9 @@ function Navigator({setView, view}: viewProps) {
 
     return (
         <div className="navigator" aria-label={TEXT_navbar}>
-            <img src='/images/logo.png' alt='logo' className='logo'/>
+            <a href='#' onClick={() => setView(pageView.MAIN)}>
+                <img src='/images/logo.png' alt='logo' className='logo'/>
+            </a>
             <button aria-label={TEXT_calendar_button} onClick={() => setView(pageView.MAIN)} >Calendar</button>
             <button aria-label={TEXT_preferences_button} onClick={() => setView(pageView.PREFERENCES)}>Preferences</button>
         </div>
