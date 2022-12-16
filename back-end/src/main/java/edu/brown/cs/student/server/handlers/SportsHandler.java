@@ -60,10 +60,10 @@ public final class SportsHandler implements Route {
     String teamID = this.idConverter.getTeamID(teamName);
 
     try {
-      String fullURL = API_URL_STUB_SCHED + sportName + "/"
+      String fullUrl = API_URL_STUB_SCHED + sportName + "/"
           + leagueName + "/teams/" + teamID + "/schedule";
-      String apiJSON = WebResponse.getWebResponse(fullURL).body();
-      ESPNContents scheduleData = this.deserializeSchedule(apiJSON);
+      String apiJson = WebResponse.getWebResponse(fullUrl).body();
+      ESPNContents scheduleData = this.deserializeSchedule(apiJson);
       this.addSuccessResponse(scheduleData, responseMap);
     } catch (IOException | InterruptedException | ServerFailureException e) {
       responseMap.put("result", "error_bad_request");
@@ -80,7 +80,7 @@ public final class SportsHandler implements Route {
    */
   private void addSuccessResponse(ESPNContents scheduleData, Map<String, Object> responseMap)
       throws ServerFailureException {
-    List<Map<String, String>> listOfMaps =  new ArrayList<>();
+    List<Map<String, String>> eventListOfMaps =  new ArrayList<>();
     responseMap.put("result", "success");
     responseMap.put("displayName", scheduleData.team().displayName());
 
@@ -90,16 +90,15 @@ public final class SportsHandler implements Route {
           "id", event.id(), "link", event.links().get(0).href()
       ));
       Competitor firstTeam = event.competitions().get(0).competitors().get(0);
-      if (firstTeam.homeAway().equals("home")) {  // add the home team, then the away team
-        innerMap.put("homeTeamName", firstTeam.team().displayName());
-        innerMap.put("awayTeamName", event.competitions().get(0).competitors().get(1).team().displayName());
-      } else {
-        innerMap.put("homeTeamName", event.competitions().get(0).competitors().get(1).team().displayName());
-        innerMap.put("awayTeamName", firstTeam.team().displayName());
-      }
-      listOfMaps.add(innerMap);
+      Competitor secondTeam = event.competitions().get(0).competitors().get(1);
+      innerMap.put("homeTeamName", firstTeam.homeAway().equals("home")
+          ? firstTeam.team().displayName() : secondTeam.team().displayName());
+      innerMap.put("awayTeamName", firstTeam.homeAway().equals("away")
+          ? firstTeam.team().displayName() : secondTeam.team().displayName());
+
+      eventListOfMaps.add(innerMap);
     }
-    responseMap.put("eventList", listOfMaps);
+    responseMap.put("eventList", eventListOfMaps);
   }
 
   /**
