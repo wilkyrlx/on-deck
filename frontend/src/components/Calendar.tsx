@@ -4,7 +4,9 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Event } from '../model/Event';
 import {CalendarEvent} from "./CalendarEvent";
+import '../styles/CalendarEvent.css';
 
+//TODO: maybe remove week view since bad rendering w/ new event
 function FullCalendarApp({ events }: { events: Event[] }) {
     const convertedEvents = events.map(e => convertToCalendarEvent(e))
     console.log(convertedEvents)
@@ -17,7 +19,7 @@ function FullCalendarApp({ events }: { events: Event[] }) {
           center: 'timeGridWeek,timeGridDay',
         }}
         events={convertedEvents}
-          eventColor="#76828d"
+        eventClassNames={"raw-calendar-event"}
         nowIndicator
         dateClick={(e) => console.log(e.dateStr)}
         eventClick={(e) => console.log(e.event.id)}

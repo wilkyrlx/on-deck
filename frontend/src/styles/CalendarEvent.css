@@ -1,7 +1,18 @@
+.raw-calendar-event {
+    border: none;
+    border-radius: 8px;
+    padding: 0px;
+    margin: 0px;
+    background-color: rgba(0, 0, 0, 0.05);
+    background-color: #76828d;
+    backdrop-filter: blur(400px);
+}
+
 .calendar-event {
     display: flex;
     gap: 12px;
-    color: rgba(255, 255, 255, 0.87);
+    padding: 8px;
+/*    color: rgba(0, 0, 0, 0.87);*/
 }
 
 .calendar-event > img {
