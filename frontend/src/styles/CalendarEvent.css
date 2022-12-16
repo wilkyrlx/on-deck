@@ -1,0 +1,20 @@
+.calendar-event {
+    display: flex;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+.calendar-event > img {
+    width: 40px;
+    height: 40px;
+}
+
+.calendar-event > .event-text {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.calendar-event > .event-timerange {
+    width: 140px;
+}

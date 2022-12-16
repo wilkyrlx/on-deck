@@ -3,6 +3,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Event } from '../model/Event';
+import {CalendarEvent} from "./CalendarEvent";
 
 function FullCalendarApp({ events }: { events: Event[] }) {
     const convertedEvents = events.map(e => convertToCalendarEvent(e))
@@ -13,16 +14,10 @@ function FullCalendarApp({ events }: { events: Event[] }) {
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="timeGridDay"
         headerToolbar={{
-          center: 'timeGridWeek,timeGridDay new',
-        }}
-        customButtons={{
-          new: {
-            text: 'new',
-            click: () => console.log('new event'),
-          },
+          center: 'timeGridWeek,timeGridDay',
         }}
         events={convertedEvents}
-        eventColor="red"
+          eventColor="#76828d"
         nowIndicator
         dateClick={(e) => console.log(e.dateStr)}
         eventClick={(e) => console.log(e.event.id)}
@@ -37,13 +32,7 @@ function FullCalendarApp({ events }: { events: Event[] }) {
 function renderEventContent(eventInfo: EventInput) {
     const event = eventInfo.event.extendedProps.eventDetails
     console.log(event)
-  return (
-    <div>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
-      <p>{eventInfo.event.extendedProps.image}</p>
-    </div>
-  );
+    return (<CalendarEvent event={event}/>)
 }
 
 export default FullCalendarApp;
