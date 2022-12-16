@@ -35,9 +35,8 @@ public final class Scorer {
    * Adds the Event and its interest score to the Map.
 
    * @param event a sports game pulled from the ESPN API
-   * @throws ServerFailureException if the odds API cannot be reached
    */
-  public void addEvent(Event event, String sportName, String leagueName) throws ServerFailureException {
+  public void addEvent(Event event, String sportName, String leagueName) {
     double score = this.scoreEvent(event, sportName, leagueName);
     this.eventScores.put(event, score);
   }
@@ -47,9 +46,8 @@ public final class Scorer {
 
    * @param event a sports game pulled from the ESPN API
    * @return a number representing how interesting the game should be (higher = more interesting)
-   * @throws ServerFailureException if the odds API cannot be reached
    */
-  private Double scoreEvent(Event event, String sportName, String leagueName) throws ServerFailureException {
+  private Double scoreEvent(Event event, String sportName, String leagueName) {
     String gameId = event.id();
     try {
       String fullURL = API_URL_STUB_ODDS + sportName + "/leagues/" + leagueName + "/events/"
@@ -64,9 +62,9 @@ public final class Scorer {
 
   private Double calculateScore(ESPNOdds odds, String sportName) {
     double baselineOvUnd = averageOverUnder.get(sportName);
-    double ovUndDifference = odds.items().get(0).overUnder() - baselineOvUnd; // higher is more interest
+    double ovUndDiff = odds.items().get(0).overUnder() - baselineOvUnd; // higher is more interest
     double spread = Math.abs(odds.items().get(0).spread()); // closer to 0 is more interest
-    return 1.5 * ovUndDifference - spread;
+    return 1.5 * ovUndDiff - spread;
   }
 
   /**
