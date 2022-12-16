@@ -36,7 +36,7 @@ function Highlights({ events }: { events: Event[] }) {
 function HighlightItem({ event }: { event: Event }) {
     return (
         <div className="highlight" aria-label={accessibleEvent(event)}>
-            <b>{event.timeRange()}</b>
+            <b>{event.dateTimeRange()}</b>
             <p>{event.title()}</p>
         </div>
     )

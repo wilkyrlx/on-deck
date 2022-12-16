@@ -4,11 +4,12 @@ import FullCalendarApp from "./components/Calendar";
 import { Preferences } from "./components/Preferences";
 import { Navigator } from "./components/Navigator";
 import { pageView } from "./types/pageView";
-import { mockEvents, mockSavedTeams } from './data/mock';
+import { MockRepository } from './data/mock';
 import { MainCalendar } from './components/MainCalendar';
 import { Team } from './model/Team';
 import { setCookie } from './save-data/cookieManager';
 import { loadPreferencesCookie, sendPreferencesRequest } from './save-data/preferencesManager';
+import {EventsRepository} from "./data/EventsRepository";
 
 export interface viewProps {
 	setView: Dispatch<SetStateAction<pageView>>,
@@ -30,7 +31,7 @@ function App() {
 
 	// determines which tab to open
 	const [view, setView] = useState<pageView>(pageView.MAIN)
-    const [savedTeams, setSavedTeams] = useState(mockSavedTeams)
+    const [savedTeams, setSavedTeams] = useState<Team[]>([])
 
 	function updateTeamPreference(team: Team, isAdding: boolean) {
 		if (isAdding) {
@@ -46,6 +47,8 @@ function App() {
 		sendPreferencesRequest();
 	}
 
+    const repository: EventsRepository = new MockRepository()
+
 	return (
 		<div className="app">
 			<Navigator setView={setView} view={view} />
@@ -55,7 +58,7 @@ function App() {
                     onRemoveTeam={(team) => updateTeamPreference(team, false)}
                     onAddTeam={(team) => updateTeamPreference(team, true)}/> }
             { view === pageView.MAIN &&
-                <MainCalendar events={mockEvents}/> }
+                <MainCalendar repository={repository} savedTeams={savedTeams}/> }
 		</div>
 	);
 }

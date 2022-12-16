@@ -1,10 +1,10 @@
-import '../styles/Calendar.css';
 import FullCalendar, { EventInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Event } from '../model/Event';
 import { accessibleEvent } from './MainCalendar';
+import { CalendarEvent } from './CalendarEvent';
 
 /**
  * Parses a list of events into a format that is useful for screenreaders
@@ -18,10 +18,11 @@ function accessibleCalendarView(events: Event[]): string {
   return fullLabel;
 }
 
+//TODO: maybe remove week view since bad rendering w/ new event
 function FullCalendarApp({ events }: { events: Event[] }) {
   const convertedEvents = events.map(e => convertToCalendarEvent(e))
   return (
-    <div className="calendar" aria-label ={accessibleCalendarView(events)}>
+    <div className="calendar" aria-label ={accessibleCalendarView(events)} style={{paddingTop: 20}}>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="timeGridDay"
@@ -45,12 +46,7 @@ function renderEventContent(eventInfo: EventInput) {
   const event: Event = eventInfo.event.extendedProps.eventDetails
   console.log(event)
   return (
-    <div aria-label={accessibleEvent(event)} className='calendar-event-container'>
-        <b>{eventInfo.timeText}</b>
-        <p>{event.title()} </p>
-        <img src={event.homeTeam.iconUrl} alt={event.awayTeam.name + "logo"} className='event-image' />
-        <img src={event.awayTeam.iconUrl} alt={event.awayTeam.name + "logo"} className='event-image' />
-    </div>
+    <CalendarEvent event={event} />
   );
 }
 

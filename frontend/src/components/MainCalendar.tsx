@@ -1,19 +1,19 @@
 import FullCalendarApp from "./Calendar";
-import Highlights from "./Highlights";
 import { Event } from '../model/Event';
-
+import {EventsRepository} from "../data/EventsRepository";
+import { Team } from "../model/Team";
+import Highlights from "./Highlights";
 
 function accessibleEvent(event: Event) {
     return event.title() + ' at ' + event.timeRange();
 }
 
-function MainCalendar({ events }: { events: Event[] }) {
+function MainCalendar({ repository, savedTeams }: { repository: EventsRepository, savedTeams: Team[] }) {
     
-
     return (
         <div>
-            <Highlights events={events}/>
-            <FullCalendarApp events={events}/>
+            <Highlights events={repository.getHighlightGames(savedTeams)}/>
+            <FullCalendarApp events={repository.getEvents(savedTeams)}/>
         </div>
     );
 }

@@ -2,6 +2,16 @@ import { Event } from '../model/Event'
 import { Sport } from '../model/Sport'
 import { Team } from '../model/Team';
 
+// @ts-ignore
+export class MockRepository implements  EventsRepository {
+    getEvents(teamPreferences: Team[]): Event[] {
+        return mockEvents
+    }
+    getHighlightGames(teamPreferences: Team[]): Event[] {
+        return mockEvents
+    }
+}
+
 export const mockEvents: Event[] = [
     new Event(
         "test1",

@@ -1,0 +1,31 @@
+.raw-calendar-event {
+    border: none;
+    border-radius: 8px;
+    padding: 0px;
+    margin: 0px;
+    background-color: rgba(0, 0, 0, 0.05);
+    background-color: #76828d;
+    backdrop-filter: blur(400px);
+}
+
+.calendar-event {
+    display: flex;
+    gap: 12px;
+    padding: 8px;
+/*    color: rgba(0, 0, 0, 0.87);*/
+}
+
+.calendar-event > img {
+    width: 40px;
+    height: 40px;
+}
+
+.calendar-event > .event-text {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.calendar-event > .event-timerange {
+    width: 140px;
+}
