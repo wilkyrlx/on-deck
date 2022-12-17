@@ -4,7 +4,6 @@ import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import edu.brown.cs.student.server.data.ESPNContents.Event;
 import edu.brown.cs.student.util.Scorer;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import spark.Request;
