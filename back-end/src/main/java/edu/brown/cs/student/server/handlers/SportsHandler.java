@@ -40,6 +40,7 @@ public final class SportsHandler implements Route {
     try {
       this.idConverter = new TeamID(moshi);
     } catch (ServerFailureException e) {
+      System.err.println("Sever failure");
       throw new RuntimeException(e);
     }
     this.scorer = scorer;

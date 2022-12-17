@@ -37,7 +37,7 @@ public final class ImportantGamesHandler implements Route {
     try {
       int gamesCount = Integer.parseInt(request.queryParams("count"));
       List<Event> mostInteresting = scorer.getMostInterestingEvents(gamesCount);
-      responseMap = this.addEventsToMap(mostInteresting);
+      responseMap = addEventsToMap(mostInteresting);
     } catch (NumberFormatException e) {
       responseMap = Map.of("result", "error_bad_request");
     }
@@ -52,7 +52,7 @@ public final class ImportantGamesHandler implements Route {
    * @param mostInteresting a List of the most interesting events, a scored by Scorer
    * @return a Map representing either a successful addition or an error message
    */
-  private Map<String, Object> addEventsToMap(List<Event> mostInteresting) {
+  private static Map<String, Object> addEventsToMap(List<Event> mostInteresting) {
     if (mostInteresting != null) {
       return Map.of("result", "success", "topEvents", mostInteresting);
     } else {
