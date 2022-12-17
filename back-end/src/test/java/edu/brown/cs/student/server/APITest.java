@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterEach;
@@ -103,7 +104,7 @@ public class APITest {
     Assertions.assertNotNull(response);
     assertTrue(response.get("eventList") instanceof List);
     List<Map<String, String>> eventList = (List<Map<String, String>>)response.get("eventList");
-    
+
     assertEquals(response.get("result"), "success");
     assertEquals(response.get("displayName"),"Boston Celtics");
     assertEquals(eventList.get(0).get("name"),
@@ -207,4 +208,50 @@ public class APITest {
     assertEquals(response.get("result"), "error_bad_request");
     clientConnection.disconnect();
   }
+
+  /**
+   * Tests the Default Handler
+   */
+  @Test
+  public void testDefaultHandler() throws IOException {
+    HttpURLConnection clientConnection = tryRequest("not-a-valid-request");
+    Map<String, Object> response = getResponse(clientConnection);
+
+    Assertions.assertNotNull(response);
+    assertEquals(response.get("result"), "error_bad_json");
+  }
+
+  /**
+   * Uses fuzz testing with random bad requests
+   */
+  @Test
+  public void fuzzTestDefaultHandler() throws IOException {
+    for (int i = 0; i < 1000; i++) {
+      HttpURLConnection clientConnection = tryRequest(fuzzTestHelper(5, 20));
+      Map<String, Object> response = getResponse(clientConnection);
+
+      Assertions.assertNotNull(response);
+      assertEquals(response.get("result"), "error_bad_json");
+    }
+  }
+
+  private String fuzzTestHelper(int minLen, int maxLen) {
+    // from: https://stackoverflow.com/questions/20389890/generating-a-random-number-between-1-and-10-java
+    String aToZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    Random rand = new Random();
+    StringBuilder res = new StringBuilder();
+
+    for (int i = 0; i < rand.nextInt(maxLen - minLen + 1) + minLen; i++) {
+      int randIndex = rand.nextInt(aToZ.length());
+      res.append(aToZ.charAt(randIndex));
+    }
+    // just in case we randomly produce a valid request name
+    if (res.toString().equals("sports") || res.toString().equals("important")) {
+      return "foo-bar";
+    } else {
+      return res.toString();
+    }
+  }
+
+
 }
