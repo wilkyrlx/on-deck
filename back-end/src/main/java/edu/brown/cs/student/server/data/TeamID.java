@@ -1,7 +1,7 @@
 package edu.brown.cs.student.server.data;
 
+import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.server.data.ESPNTeams.Sport.League.TeamWrapper;
-import edu.brown.cs.student.server.handlers.SportsHandler;
 import edu.brown.cs.student.util.ServerFailureException;
 import edu.brown.cs.student.util.WebResponse;
 import java.io.IOException;
@@ -17,6 +17,32 @@ import java.util.Map;
  */
 public final class TeamID {
   private final Map<String, String> teamNameToIDs = new HashMap<>();
+  public static final List<String> LEAGUE_LIST = Arrays.asList(
+      "football/nfl", "baseball/mlb", "basketball/nba", "hockey/nhl");
+
+  /**
+   * Constructor for the TeamID class.
+
+   * @param moshi Moshi instance to adapt the JSON
+   */
+  public TeamID(Moshi moshi) throws ServerFailureException {
+    final String API_URL_STUB = "https://site.api.espn.com/apis/site/v2/sports/";
+
+    try {
+      for (String league : LEAGUE_LIST) {
+        String fullURL = API_URL_STUB + league + "/teams";
+        String apiJSON = WebResponse.getWebResponse(fullURL).body();
+        ESPNTeams ESPNRes = moshi.adapter(ESPNTeams.class).fromJson(apiJSON);
+        if (ESPNRes != null && ESPNRes.sports() != null) {
+          this.constructHashMap(ESPNRes);
+        } else {
+          throw new ServerFailureException("ESPN Response was null");
+        }
+      }
+    } catch (IOException | InterruptedException e) {
+      throw new ServerFailureException("API could not be reached");
+    }
+  }
 
   /**
    * Modifies the teamNameToIDs field.
@@ -37,39 +63,12 @@ public final class TeamID {
   }
 
   /**
-   * Constructor for the TeamID class.
-
-   * @param sportsHandler takes in a SportHandler for access to Moshi
-   */
-  public TeamID(SportsHandler sportsHandler) throws ServerFailureException {
-    final String API_URL_STUB = "https://site.api.espn.com/apis/site/v2/sports/";
-    final List<String> leagueList = Arrays.asList(
-        "football/nfl", "baseball/mlb", "basketball/nba", "hockey/nhl"
-    );
-
-    try {
-      for (String league : leagueList) {
-        String fullURL = API_URL_STUB + league + "/teams";
-        String apiJSON = WebResponse.getWebResponse(fullURL).body();
-        ESPNTeams ESPNRes = sportsHandler.moshi.adapter(ESPNTeams.class).fromJson(apiJSON);
-        if (ESPNRes != null && ESPNRes.sports() != null) {
-          this.constructHashMap(ESPNRes);
-        } else {
-          throw new ServerFailureException("ESPN Response was null");
-        }
-      }
-    } catch (IOException | InterruptedException e) {
-      throw new ServerFailureException("API could not be reached");
-    }
-  }
-
-  /**
    * Returns the team ID of the given team.
 
-   * @param teamName the name of the sports team
+   * @param teamSlug the name of the sports team
    * @return the team's ESPN internal ID
    */
-  public String getTeamID(String teamName) {
-    return this.teamNameToIDs.get(teamName);
+  public String getTeamID(String teamSlug) {
+    return this.teamNameToIDs.get(teamSlug);
   }
 }
