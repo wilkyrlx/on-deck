@@ -23,3 +23,12 @@ export function leagueToSport(sport: Sport): string {
         case Sport.MLB: return "baseball"
     }
 }
+
+export function averageGameLength(sport: Sport): number {
+    switch (sport) {
+        case Sport.NFL: return 3
+        case Sport.NBA: return 2
+        case Sport.NHL: return 2
+        case Sport.MLB: return 3
+    }
+}

@@ -27,7 +27,7 @@ export function cookieToTeam(cookie: string): Team {
 }
 
 
-function slugifyTeam(team: Team): string {
+export function slugifyTeam(team: Team): string {
     return team.name.toLowerCase().replace(" ", "-");
 }
 
