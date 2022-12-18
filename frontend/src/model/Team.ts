@@ -11,10 +11,6 @@ export function teamToCookie(team: Team): string {
     return `${leagueToSport(team.sport)}|${sportToString(team.sport)}|${slugifyTeam(team)}`;
 }
 
-function slugifyTeam(team: Team): string {
-    return team.name.toLowerCase().replaceAll(" ", "-");
-}
-
 /**
  * Function takes in a singular slug and returns a Team object
  * @param cookie - such as new-england-patriots
@@ -27,6 +23,11 @@ export function slugToTeam(slugName: string): Team {
 
     const results = teams.filter(t => t.name.toLowerCase().includes(teamName.toLowerCase()))
     return results[0];
+}
+
+
+export function slugifyTeam(team: Team): string {
+    return team.name.toLowerCase().replace(" ", "-");
 }
 
 function unslugifyTeamName(team: string): string {
