@@ -1,0 +1,152 @@
+[
+    {
+        name: "Atlanta Hawks",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/atl.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Boston Celtics",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/bos.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Brooklyn Nets",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/bkn.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Charlotte Hornets",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/cha.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Chicago Bulls",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/chi.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Cleveland Cavaliers",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/cle.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Dallas Mavericks",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/dal.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Denver Nuggets",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/den.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Detroit Pistons",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/det.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Golden State Warriors",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/gs.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Houston Rockets",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/hou.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Indiana Pacers",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/ind.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "LA Clippers",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lac.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Los Angeles Lakers",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Memphis Grizzlies",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/mem.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Miami Heat",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/mia.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Milwaukee Bucks",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/mil.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Minnesota Timberwolves",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/min.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "New Orleans Pelicans",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/no.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "New York Knicks",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/ny.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Oklahoma City Thunder",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/okc.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Orlando Magic",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/orl.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Philadelphia 76ers",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/phi.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Phoenix Suns",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/phx.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Portland Trail Blazers",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/por.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Sacramento Kings",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/sac.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "San Antonio Spurs",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/sa.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Toronto Raptors",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/tor.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Utah Jazz",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/utah.png",
+        sport: Sport.NBA
+    },
+    {
+        name: "Washington Wizards",
+        iconUrl: "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/wsh.png",
+        sport: Sport.NBA
+    }
+]
