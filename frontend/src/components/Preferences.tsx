@@ -18,9 +18,9 @@ export interface PreferencesProps {
 }
 function Preferences({savedTeams, onRemoveTeam, onAddTeam}: PreferencesProps) {
     return (
-        <div className="preferences">
+        <div className="preferences" aria-label="preferences">
             { savedTeams.length > 0 && (
-                <div className="your-teams">
+                <div className="your-teams" aria-label="your teams">
                     <h1>Your Teams</h1>
                     {savedTeams.map((team) =>
                     <SavedTeamItem team={team} onRemove={() => onRemoveTeam(team)}/>
