@@ -18,8 +18,8 @@ export class BackendRepository implements EventsRepository {
                     eventList.map(responseEvent => {
                         const homeTeam = allTeams.find(t => t.name === responseEvent.homeTeam)
                         const awayTeam = allTeams.find(t => t.name === responseEvent.awayTeam)
-                        if(homeTeam == undefined) throw new Error(`could not find team name = ${responseEvent.homeTeam}`)
-                        if(awayTeam == undefined) throw new Error(`could not find team name = ${responseEvent.awayTeam}`)
+                        if(homeTeam === undefined) throw new Error(`could not find team name = ${responseEvent.homeTeam}`)
+                        if(awayTeam === undefined) throw new Error(`could not find team name = ${responseEvent.awayTeam}`)
                         const startTime = new Date(Date.parse(responseEvent.startTime))
                         const endTime = addHours(startTime, averageGameLength(homeTeam.sport))
                         return new Event(responseEvent.id, homeTeam, awayTeam, startTime, endTime, homeTeam.sport)
