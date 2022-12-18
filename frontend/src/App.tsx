@@ -9,7 +9,8 @@ import { MainCalendar } from './components/MainCalendar';
 import { slugToTeam, Team } from './model/Team';
 import { setCookie } from './save-data/cookieManager';
 import { loadPreferencesCookie, sendPreferencesRequest } from './save-data/preferencesManager';
-import {EventsRepository} from "./data/EventsRepository";
+import { EventsRepository } from "./data/EventsRepository";
+import { BackendRepository } from "./data/BackendRepository";
 
 export interface viewProps {
 	setView: Dispatch<SetStateAction<pageView>>,
@@ -47,7 +48,7 @@ function App() {
 		sendPreferencesRequest();
 	}
 
-    const repository: EventsRepository = new MockRepository()
+    const repository: EventsRepository = new BackendRepository()
 
 	return (
 		<div className="app">

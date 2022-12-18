@@ -4,33 +4,25 @@ import {EventsRepository} from "./EventsRepository";
 import {slugifyTeam, Team} from "../model/Team";
 import {allTeams} from "./allTeams";
 import {addHours} from "./mock";
+import * as assert from "assert";
 
 const API_URL = "http://localhost:3232"
 export class BackendRepository implements EventsRepository {
     getEvents(teamPreferences: Team[]): Promise<Event[]> {
-        const requestPromises: Promise<Event[]| void>[] = teamPreferences.map(team => {
+        const requestPromises: Promise<Event[]>[] = teamPreferences.map(team => {
             const requestURL = API_URL + `/sports?sport=${sportToSportString(team.sport)}&league=${sportToLeagueString(team.sport)}&team=${slugifyTeam(team)}`
-            return fetch(requestURL)
+            const responsePromise: Promise<Event[]> = fetch(requestURL)
                 .then(r => r.json())
                 .then(response => {
-                    const eventList: any = response.eventList
-                    //@ts-ignore
-                    eventList.map(responseEvent => {
-                        const homeTeam = allTeams.find(t => t.name === responseEvent.homeTeam)
-                        const awayTeam = allTeams.find(t => t.name === responseEvent.awayTeam)
-                        if(homeTeam === undefined) throw new Error(`could not find team name = ${responseEvent.homeTeam}`)
-                        if(awayTeam === undefined) throw new Error(`could not find team name = ${responseEvent.awayTeam}`)
-                        const startTime = new Date(Date.parse(responseEvent.startTime))
-                        const endTime = addHours(startTime, averageGameLength(homeTeam.sport))
-                        return new Event(responseEvent.id, homeTeam, awayTeam, startTime, endTime, homeTeam.sport)
-                    }
-                )})
+                    const eventList: BackendEvent[] = response.eventList
+                    return eventList.map(backendEvent => backendEventToEvent(backendEvent))
+                })
+            return responsePromise
         })
-        const onlySuccessful: Promise<Event[]>[] = requestPromises
-            .filter(p => p instanceof Promise<Event[]>)
-            .map(p => p as Promise<Event[]>)
-        const combined: Promise<Event[][]> = Promise.all(onlySuccessful)
-        return combined.then(responses => responses.flatMap(r => r))
+        const combined: Promise<Event[][]> = Promise.all(requestPromises)
+        const allGames: Promise<Event[]> = combined.then(responses => responses.flatMap(r => r))
+        .then(ag => { console.log(`backend found allGames = ${JSON.stringify(ag)}`); return ag})
+        return allGames
     }
     getHighlightGames(teamPreferences: Team[]): Promise<Event[]> {
         return new Promise(resolve => setTimeout(resolve, 400))
@@ -54,4 +46,23 @@ function sportToLeagueString(sport: Sport) {
         case Sport.NHL: return "nhl"
         case Sport.MLB: return "mlb"
     }
+}
+
+interface BackendEvent {
+    "link": string,
+    "name": string,
+    "id": string,
+    "date": string,
+    "homeTeamName": string,
+    "awayTeamName": string,
+}
+
+function backendEventToEvent(backendEvent: BackendEvent): Event {
+    const homeTeam = allTeams.find(t => t.name === backendEvent.homeTeamName)
+    const awayTeam = allTeams.find(t => t.name === backendEvent.awayTeamName)
+    if(homeTeam === undefined) throw new Error(`could not find team name = ${backendEvent.homeTeamName}`)
+    if(awayTeam === undefined) throw new Error(`could not find team name = ${backendEvent.awayTeamName}`)
+    const startTime = new Date(Date.parse(backendEvent.date))
+    const endTime = addHours(startTime, averageGameLength(homeTeam.sport))
+    return new Event(backendEvent.id, homeTeam, awayTeam, startTime, endTime, homeTeam.sport)
 }

@@ -20,6 +20,7 @@ function accessibleCalendarView(events: Event[]): string {
 }
 
 function FullCalendarApp({ events }: { events: Event[] }) {
+    console.log(`before conversion, events = ${JSON.stringify(events)}`)
   const convertedEvents = events.map(e => convertToCalendarEvent(e))
   return (
     <div className="calendar" aria-label ={accessibleCalendarView(events)} style={{paddingTop: 20}}>
