@@ -1,6 +1,5 @@
 import { Sport } from "../model/Sport";
 import { slugToTeam, Team, teamToCookie } from "../model/Team";
-import { getCookie, setCookie } from "./cookieManager";
 import { Event } from '../model/Event'
 
 // TODO: does not load the last added team into cookie
@@ -20,7 +19,12 @@ function loadPreferencesCookie(savedTeams: Team[]) {
 
 function sendPreferencesRequest() {
     // get preferences from cookies, then send a request to server
-    const cookieContents: string = getCookie("preferences");
+    const cookieContents: string | null = localStorage.getItem("preferences");
+    
+    if (cookieContents == null) {
+        throw new Error("No preferences cookie found");
+    }
+
     const cookieList: string[] = cookieContents.split(",");
 
     cookieList.forEach(cookie => {
