@@ -5,9 +5,11 @@ function Consent({ setConsent }: { setConsent: (consent: boolean) => void }) {
 
     function giveConsent(isConsenting: boolean) {
         if (!isConsenting) {
+            // user is not consenting to data storage
             localStorage.setItem("cookieConsent", "false");
-            setConsent(true);
+            setConsent(false);
         } else {
+            // user is consenting to data storage
             localStorage.setItem("cookieConsent", "true");
             setConsent(true);
         }

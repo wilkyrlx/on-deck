@@ -21,7 +21,7 @@ export class BackendRepository implements EventsRepository {
         })
         const combined: Promise<Event[][]> = Promise.all(requestPromises)
         const allGames: Promise<Event[]> = combined.then(responses => responses.flatMap(r => r))
-        .then(ag => { console.log(`backend found allGames = ${JSON.stringify(ag)}`); return ag})
+        .then(ag => { console.log(`backend found allGames = {JSON.stringify(ag)}`); return ag})
         return allGames
     }
     getHighlightGames(teamPreferences: Team[]): Promise<Event[]> {

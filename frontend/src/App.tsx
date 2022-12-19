@@ -19,34 +19,42 @@ export interface viewProps {
 
 function App() {
 
+	// determines which tab to open
+	const [view, setView] = useState<pageView>(pageView.MAIN)
+	// stores the teams that the user has selected
+	const [savedTeams, setSavedTeams] = useState<Team[]>([])
+	// determines whether or not to show the consent form
+	const [consent, setConsent] = useState<boolean>(false);
+
 	// FIXME: component mounts twice because index.tsx has react.strictmode. see https://stackoverflow.com/questions/61254372/my-react-component-is-rendering-twice-because-of-strict-mode/61897567#61897567
 	// runs when the component is mounted (only once)
 	useEffect(() => {
 		console.log('initializing app - sending request to server');
-		checkCookieConsent();
-		const savedTeams: Team[] = loadPreferencesCookie();
-		setSavedTeams(savedTeams);
+		checkConsent();
+		setSavedTeams(loadPreferencesCookie());
 	}, []);
-  
-
-	// determines which tab to open
-	const [view, setView] = useState<pageView>(pageView.MAIN)
-	// stores the teams that the user has selected
-    const [savedTeams, setSavedTeams] = useState<Team[]>([])
-	// determines whether or not to show the consent form
-	const [consent, setConsent] = useState<boolean>(false);
 
 
+	// TODO: make this actually do something
 	/**
 	 * Checks if the user has given consent to save data already. If they have, hide
 	 * the consent form. If they haven't, show the consent form (by default)
 	 */
-	function checkCookieConsent() {
+	function checkConsent() {
 		const cookieConsent: string | null = localStorage.getItem("cookieConsent");
 		if (cookieConsent === "true") {
 			setConsent(true);
-		}
+		} 
 	}
+
+	// TODO: clicking do not consent registers but does not hide the consent form
+	function askedForConsent() {
+		const cookieConsent: string | null = localStorage.getItem("cookieConsent");
+		console.log('cookieConsent: ' + cookieConsent);
+		return cookieConsent !== null;
+	}
+
+
 
 	function updateTeamPreference(team: Team, isAdding: boolean) {
 		if (isAdding) {
@@ -56,17 +64,21 @@ function App() {
 			// runs if user is removing a preference
 			setSavedTeams(savedTeams.filter(t => t !== team))
 		}
-		
-		// save the new preferences to the cookie
-		savePreferencesCookie(savedTeams);
+
+		// TODO: test this
+		// save the new preferences to local storage ONLY IF the user has given consent
+		console.log(`consent FINDME ${consent} - saving preferences`)
+		if (consent) {
+			savePreferencesCookie(savedTeams);
+		}
 	}
 
     const repository: EventsRepository = new BackendRepository()
 
 	return (
 		<div className="app">
+			{ !askedForConsent() && <Consent setConsent={setConsent} /> }
 			<Navigator setView={setView} view={view} />
-			{ !consent && <Consent setConsent={setConsent} /> }
             { view === pageView.PREFERENCES &&
                 <Preferences
                     savedTeams={savedTeams}
