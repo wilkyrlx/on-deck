@@ -6,7 +6,7 @@ import { pageView } from "./types/pageView";
 import { MockRepository } from './data/mock';
 import { MainCalendar } from './components/MainCalendar';
 import { slugToTeam, Team } from './model/Team';
-import { loadPreferencesCookie, sendPreferencesRequest } from './save-data/preferencesManager';
+import { loadPreferencesCookie, savePreferencesCookie } from './save-data/preferencesManager';
 import { EventsRepository } from "./data/EventsRepository";
 import { BackendRepository } from "./data/BackendRepository";
 import { Consent } from './components/Consent';
@@ -23,8 +23,9 @@ function App() {
 	// runs when the component is mounted (only once)
 	useEffect(() => {
 		console.log('initializing app - sending request to server');
-		sendPreferencesRequest();
 		checkCookieConsent();
+		const savedTeams: Team[] = loadPreferencesCookie();
+		setSavedTeams(savedTeams);
 	}, []);
   
 
@@ -57,8 +58,7 @@ function App() {
 		}
 		
 		// save the new preferences to the cookie
-		loadPreferencesCookie(savedTeams);
-		sendPreferencesRequest();
+		savePreferencesCookie(savedTeams);
 	}
 
     const repository: EventsRepository = new BackendRepository()

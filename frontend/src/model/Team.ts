@@ -8,7 +8,7 @@ export interface Team {
 }
 
 export function teamToCookie(team: Team): string {
-    return `${leagueToSport(team.sport)}|${sportToString(team.sport)}|${slugifyTeam(team)}`;
+    return `${slugifyTeam(team)}`;
 }
 
 /**
