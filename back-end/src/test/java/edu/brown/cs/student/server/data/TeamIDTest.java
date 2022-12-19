@@ -4,14 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.util.ServerFailureException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TeamIDTest {
   private static final Moshi moshi = new Moshi.Builder().build();
   private TeamID teamID;
 
-  @Before
+  @BeforeEach
   public void setUp() throws ServerFailureException {
     teamID = new TeamID(moshi);
   }
