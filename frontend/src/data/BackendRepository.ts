@@ -4,7 +4,6 @@ import {EventsRepository} from "./EventsRepository";
 import {slugifyTeam, Team} from "../model/Team";
 import {allTeams} from "./allTeams";
 import {addHours} from "./mock";
-import * as assert from "assert";
 
 const API_URL = "http://localhost:3232"
 export class BackendRepository implements EventsRepository {
@@ -14,6 +13,7 @@ export class BackendRepository implements EventsRepository {
             const responsePromise: Promise<Event[]> = fetch(requestURL)
                 .then(r => r.json())
                 .then(response => {
+                    if (response.result == "error_bad_request") return []
                     const eventList: BackendEvent[] = response.eventList
                     return eventList.map(backendEvent => backendEventToEvent(backendEvent))
                 })

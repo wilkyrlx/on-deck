@@ -27,7 +27,7 @@ export function slugToTeam(slugName: string): Team {
 
 
 export function slugifyTeam(team: Team): string {
-    return team.name.toLowerCase().replace(" ", "-");
+    return team.name.toLowerCase().replaceAll(" ", "-");
 }
 
 function unslugifyTeamName(team: string): string {
