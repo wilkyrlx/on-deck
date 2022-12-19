@@ -1,17 +1,17 @@
 import '../styles/Consent.css';
 
-function Consent({ setConsent }: { setConsent: (consent: boolean) => void }) {
+function Consent({ setConsentAsk }: { setConsentAsk: (consent: boolean) => void }) {
     
 
     function giveConsent(isConsenting: boolean) {
         if (!isConsenting) {
             // user is not consenting to data storage
             localStorage.setItem("cookieConsent", "false");
-            setConsent(false);
+            setConsentAsk(false);
         } else {
             // user is consenting to data storage
             localStorage.setItem("cookieConsent", "true");
-            setConsent(true);
+            setConsentAsk(false);
         }
     }
 
