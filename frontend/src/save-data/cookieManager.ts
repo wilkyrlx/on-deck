@@ -9,7 +9,7 @@ function setCookie(cname: string, cvalue: string) {
     // cookie expires in 2038
     d.setTime(2147483647);
     let expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    document.cookie = cname + "=" + cvalue + ";" + expires;
 }
 
 /** 

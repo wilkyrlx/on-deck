@@ -1,23 +1,20 @@
 import './styles/App.css';
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import FullCalendarApp from "./components/Calendar";
 import { Preferences } from "./components/Preferences";
 import { Navigator } from "./components/Navigator";
 import { pageView } from "./types/pageView";
 import { MockRepository } from './data/mock';
 import { MainCalendar } from './components/MainCalendar';
 import { slugToTeam, Team } from './model/Team';
-import { setCookie } from './save-data/cookieManager';
 import { loadPreferencesCookie, sendPreferencesRequest } from './save-data/preferencesManager';
 import { EventsRepository } from "./data/EventsRepository";
 import { BackendRepository } from "./data/BackendRepository";
+import { Consent } from './components/Consent';
 
 export interface viewProps {
 	setView: Dispatch<SetStateAction<pageView>>,
 	view: pageView,
 }
-
-
 
 
 function App() {
@@ -27,12 +24,28 @@ function App() {
 	useEffect(() => {
 		console.log('initializing app - sending request to server');
 		sendPreferencesRequest();
+		checkCookieConsent();
 	}, []);
   
 
 	// determines which tab to open
 	const [view, setView] = useState<pageView>(pageView.MAIN)
+	// stores the teams that the user has selected
     const [savedTeams, setSavedTeams] = useState<Team[]>([])
+	// determines whether or not to show the consent form
+	const [consent, setConsent] = useState<boolean>(false);
+
+
+	/**
+	 * Checks if the user has given consent to save data already. If they have, hide
+	 * the consent form. If they haven't, show the consent form (by default)
+	 */
+	function checkCookieConsent() {
+		const cookieConsent: string | null = localStorage.getItem("cookieConsent");
+		if (cookieConsent === "true") {
+			setConsent(true);
+		}
+	}
 
 	function updateTeamPreference(team: Team, isAdding: boolean) {
 		if (isAdding) {
@@ -52,8 +65,8 @@ function App() {
 
 	return (
 		<div className="app">
-			<button onClick={() => slugToTeam('new-england-patriots')}>cookie</button>
 			<Navigator setView={setView} view={view} />
+			{ !consent && <Consent setConsent={setConsent} /> }
             { view === pageView.PREFERENCES &&
                 <Preferences
                     savedTeams={savedTeams}
@@ -66,3 +79,5 @@ function App() {
 }
 
 export default App;
+
+

@@ -3,6 +3,7 @@ import { slugToTeam, Team, teamToCookie } from "../model/Team";
 import { getCookie, setCookie } from "./cookieManager";
 import { Event } from '../model/Event'
 
+// TODO: does not load the last added team into cookie
 /**
  * load preferences into cookies
  * @param savedTeams  - array of teams to save, based on current state
@@ -14,7 +15,7 @@ function loadPreferencesCookie(savedTeams: Team[]) {
         cookieBuilder.push(teamToCookie(team));
     });
 
-	setCookie("preferences", cookieBuilder.toString())	
+	localStorage.setItem("preferences", cookieBuilder.toString())	
 }
 
 function sendPreferencesRequest() {

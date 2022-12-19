@@ -1,0 +1,10 @@
+.consent-form {
+    height: 200px;
+    background-color: rgb(161, 161, 225);
+    padding: 20px;
+}
+
+.consent-form > button {
+    margin-top: 20px;
+}
+
