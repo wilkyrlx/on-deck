@@ -1,5 +1,7 @@
 package edu.brown.cs.student.server.handlers;
 
+import static edu.brown.cs.student.util.Scorer.addHomeAndAway;
+
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import edu.brown.cs.student.server.data.ESPNContents;
@@ -99,27 +101,14 @@ public final class SportsHandler implements Route {
           "date", event.date(), "name", event.name(),
           "id", event.id(), "link", event.links().get(0).href()
       ));
-      this.addHomeAndAway(event, innerMap);
+      addHomeAndAway(event, innerMap);
 
       eventListOfMaps.add(innerMap);
     }
     responseMap.put("eventList", eventListOfMaps);
   }
 
-  /**
-   * Adds the home team and away team names to the given map.
 
-   * @param event a sports Event from the ESPN API
-   * @param innerMap the Map of String to String
-   */
-  private void addHomeAndAway(Event event, Map<String, String> innerMap) {
-    Competitor firstTeam = event.competitions().get(0).competitors().get(0);
-    Competitor secondTeam = event.competitions().get(0).competitors().get(1);
-    innerMap.put("homeTeamName", firstTeam.homeAway().equals("home")
-        ? firstTeam.team().displayName() : secondTeam.team().displayName());
-    innerMap.put("awayTeamName", firstTeam.homeAway().equals("away")
-        ? firstTeam.team().displayName() : secondTeam.team().displayName());
-  }
 
   /**
    * Deserializes the JSON.

@@ -1,5 +1,7 @@
 package edu.brown.cs.student.server.handlers;
 
+import static edu.brown.cs.student.util.Scorer.addHomeAndAway;
+
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import edu.brown.cs.student.server.data.ESPNContents.Event;
@@ -58,12 +60,11 @@ public final class ImportantGamesHandler implements Route {
     if (mostInteresting != null) {
       List<Map<String, String>> eventList = new ArrayList<>();
       for (Event event : mostInteresting) {
-        // TODO: not pretty, but this solution for homeTeamName and awayTeamName will work
         Map<String, String> innerMap = new LinkedHashMap<>(Map.of(
           "date", event.date(), "name", event.name(),
-          "id", event.id(), "link", event.links().get(0).href(),
-            "homeTeamName", "Washington Wizards", "awayTeamName", "Washington Wizards"
+          "id", event.id(), "link", event.links().get(0).href()
       ));
+        addHomeAndAway(event, innerMap);
         eventList.add(innerMap);
       }
       return Map.of("result", "success", "eventList", eventList);
