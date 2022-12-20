@@ -65,7 +65,7 @@ public final class SportsHandler implements Route {
           + leagueName + "/teams/" + teamID + "/schedule";
       String apiJson = WebResponse.getWebResponse(fullUrl).body();
       ESPNContents scheduleData = this.deserializeSchedule(apiJson);
-      this.addSuccessResponse(scheduleData, responseMap);
+      this.addSuccessResponse(scheduleData, responseMap, sportName, leagueName);
     } catch (IOException | InterruptedException | ServerFailureException e) {
       responseMap.put("result", "error_bad_request");
     }
@@ -79,13 +79,14 @@ public final class SportsHandler implements Route {
    * @param scheduleData the data deserialized from the API JSON
    * @throws ServerFailureException if the game cannot be scored
    */
-  private void addSuccessResponse(ESPNContents scheduleData, Map<String, Object> responseMap)
+  private void addSuccessResponse(ESPNContents scheduleData, Map<String, Object> responseMap, String sportName, String leagueName)
       throws ServerFailureException {
     List<Map<String, String>> eventListOfMaps =  new ArrayList<>();
     responseMap.put("result", "success");
     responseMap.put("displayName", scheduleData.team().displayName());
 
     for (Event event : scheduleData.events()) {
+      this.scorer.addEvent(event, sportName, leagueName);
       Map<String, String> innerMap = new LinkedHashMap<>(Map.of(
           "date", event.date(), "name", event.name(),
           "id", event.id(), "link", event.links().get(0).href()

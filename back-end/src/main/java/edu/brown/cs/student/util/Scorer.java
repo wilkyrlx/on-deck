@@ -5,6 +5,7 @@ import edu.brown.cs.student.server.data.ESPNContents.Event;
 import edu.brown.cs.student.server.data.ESPNOdds;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +32,7 @@ public final class Scorer {
     this.eventScores = new LinkedHashMap<>();
   }
 
+
   /**
    * Adds the Event and its interest score to the Map.
 
@@ -54,6 +56,9 @@ public final class Scorer {
           + gameId + "/competitions/" + gameId + "/odds";
       String apiJSON = WebResponse.getWebResponse(fullURL).body();
       ESPNOdds odds = this.deserializeOddsRecord(apiJSON);
+      if (odds.items().isEmpty()) {
+        throw new IOException();
+      }
       return this.calculateScore(odds, sportName);
     } catch (IOException | InterruptedException e) {
       return 0.0; // default score if odds can't be reached
