@@ -79,8 +79,8 @@ public final class SportsHandler implements Route {
    * @param scheduleData the data deserialized from the API JSON
    * @throws ServerFailureException if the game cannot be scored
    */
-  private void addSuccessResponse(ESPNContents scheduleData, Map<String, Object> responseMap, String sportName, String leagueName)
-      throws ServerFailureException {
+  private void addSuccessResponse(ESPNContents scheduleData, Map<String, Object> responseMap,
+      String sportName, String leagueName) throws ServerFailureException {
     List<Map<String, String>> eventListOfMaps =  new ArrayList<>();
     responseMap.put("result", "success");
     responseMap.put("displayName", scheduleData.team().displayName());
