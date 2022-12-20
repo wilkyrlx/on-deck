@@ -30,14 +30,14 @@ test('slugifyTeam edge case testing', () => {
 
 test('slugToTeam basic use testing', () => {
     const exampleTeam: string = "cleveland-browns";
-    expect(slugToTeam(exampleTeam).name).toBe('Cleveland Browns')
-    expect(slugToTeam(exampleTeam).sport).toBe(Sport.NFL)
+    expect(slugToTeam(exampleTeam)!!.name).toBe('Cleveland Browns')
+    expect(slugToTeam(exampleTeam)!!.sport).toBe(Sport.NFL)
 
     const exampleTeam2: string = "new-england-patriots";
-    expect(slugToTeam(exampleTeam2).name).toBe('New England Patriots')
-    expect(slugToTeam(exampleTeam2).sport).toBe(Sport.NFL)
+    expect(slugToTeam(exampleTeam2)!!.name).toBe('New England Patriots')
+    expect(slugToTeam(exampleTeam2)!!.sport).toBe(Sport.NFL)
 
     const exampleTeam3: string = "new-york-giants";
-    expect(slugToTeam(exampleTeam3).name).toBe('New York Giants')
-    expect(slugToTeam(exampleTeam3).sport).toBe(Sport.NFL)
+    expect(slugToTeam(exampleTeam3)!!.name).toBe('New York Giants')
+    expect(slugToTeam(exampleTeam3)!!.sport).toBe(Sport.NFL)
 })
