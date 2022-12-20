@@ -20,12 +20,11 @@ export interface viewProps {
 
 function App() {
 
-	// determines which tab to open
-	const [view, setView] = useState<pageView>(pageView.MAIN)
-	
-	// stores the teams that the user has selected
-	const [savedTeams, setSavedTeams] = useState<Team[]>([])
-	
+	const repository: EventsRepository = new BackendRepository()
+	// const repository: EventsRepository = new MockRepository()
+
+	const [view, setView] = useState<pageView>(pageView.MAIN)	// determines which tab to open
+	const [savedTeams, setSavedTeams] = useState<Team[]>([]) 	// stores the teams that the user has selected
 	/* determines whether or not to show the consent form. NOTE: 
 	 * This does NOT track if the user has given consent to save data. 
 	 * It only tracks if the user has answered the consent form in some way
@@ -57,37 +56,32 @@ function App() {
 		}
 	}
 
-
-
 	/**
-	 * Adds or removes a team from the user's preferences. In addition, saves the
-	 * new preferences to local storage ONLY IF the user has given consent
-	 * 
+	 * Adds or removes a team from the user's preferences.  
 	 * @param team - the team to add or remove from the user's preferences
 	 * @param isAdding whether or not the user is adding or removing a team
 	 */
 	function updateTeamPreference(team: Team, isAdding: boolean) {
 		if (isAdding) {
 			// runs if user is adding a preference, adds the team to the list
-			// TODO: does not load the last added team into cookie
-			setSavedTeams(savedTeams.concat(team))
-			console.log('contents of savedTeams after adding: ' + savedTeams.map(t => t.name).join(','));
-			console.log('contents of savedTeams with concat: ' + savedTeams.concat(team).map(t => t.name).join(','));
+			(() => setSavedTeams(savedTeams.concat(team)))();
 		} else {
 			// runs if user is removing a preference, removes the team from the list
 			setSavedTeams(savedTeams.filter(t => t !== team))
 		}
+	}
 
-		// TODO: test this
-		// save the new preferences to local storage ONLY IF the user has given consent
+	/**
+	 * Saves the new preferences to local storage ONLY IF the user has given consent
+	 * every time savedTeams is updated, this effect runs
+	 */
+	useEffect(() => {
 		const cookieConsent: string | null = localStorage.getItem("cookieConsent");
 		if (cookieConsent === "true") {
 			savePreferencesCookie(savedTeams);
+			console.log('contents of savedTeams from effect: ' + savedTeams.map(t => t.name).join(','));
 		}
-	}
-
-	const repository: EventsRepository = new BackendRepository()
-	// const repository: EventsRepository = new MockRepository()
+	}, [savedTeams]);
 
 	return (
 		<div className="app">
