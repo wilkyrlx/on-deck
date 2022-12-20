@@ -2,6 +2,7 @@ package edu.brown.cs.student.util;
 
 import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.server.data.ESPNContents.Event;
+import edu.brown.cs.student.server.data.ESPNContents.Event.Competition.Competitor;
 import edu.brown.cs.student.server.data.ESPNOdds;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -111,5 +112,20 @@ public final class Scorer {
 
   private ESPNOdds deserializeOddsRecord(String json) throws IOException {
     return moshi.adapter(ESPNOdds.class).fromJson(json);
+  }
+
+  /**
+   * Adds the home team and away team names to the given map.
+
+   * @param event a sports Event from the ESPN API
+   * @param innerMap the Map of String to String
+   */
+  public static void addHomeAndAway(Event event, Map<String, String> innerMap) {
+    Competitor firstTeam = event.competitions().get(0).competitors().get(0);
+    Competitor secondTeam = event.competitions().get(0).competitors().get(1);
+    innerMap.put("homeTeamName", firstTeam.homeAway().equals("home")
+        ? firstTeam.team().displayName() : secondTeam.team().displayName());
+    innerMap.put("awayTeamName", firstTeam.homeAway().equals("away")
+        ? firstTeam.team().displayName() : secondTeam.team().displayName());
   }
 }
