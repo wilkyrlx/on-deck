@@ -1,6 +1,10 @@
 import '../styles/Consent.css';
 
 
+export const TEXT_consent_button_text = "Yes, I Consent"
+export const TEXT_deny_button_text = "No, Don't Save"
+
+
 /**
  * Form that asks the user consent to store data in localStorage
  * After the user consents/does not consent, the form dissapears
@@ -32,8 +36,8 @@ function Consent({ setIsConsentGranted }: { setIsConsentGranted: (consent: boole
                 By clicking yes, you consent to save your data. By clicking no, your preferences
                 will not be saved.
             </p>
-            <button onClick={() => giveConsent(true)} >Yes, I Consent</button>
-            <button onClick={() => giveConsent(false)} >No, Don't Save</button>
+            <button onClick={() => giveConsent(true)} >{TEXT_consent_button_text}</button>
+            <button onClick={() => giveConsent(false)} >{TEXT_deny_button_text}</button>
         </div>
     );
 }

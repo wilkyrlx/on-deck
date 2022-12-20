@@ -51,6 +51,13 @@ Testing for the backend includes:
 - Fuzz testing the default endpoint handler
 - Mock JSON for an ESPN response to run subsequent requests on
 
+Testing for the frontend includes:
+- Unit testing helper functions
+- Using RTL and accessible names to test component rendering
+- Manually testing the application, including with localStorage
+- Useability testing with friends
+
+
 ## Credits
 A special thank you to our TA mentor David for his guidance. In addition, thank you to Tim for a great semester in CS32.
 <br>

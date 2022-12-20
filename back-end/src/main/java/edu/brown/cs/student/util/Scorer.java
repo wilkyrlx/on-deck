@@ -5,7 +5,6 @@ import edu.brown.cs.student.server.data.ESPNContents.Event;
 import edu.brown.cs.student.server.data.ESPNOdds;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -66,7 +65,7 @@ public final class Scorer {
   }
 
   /**
-   * Calculates the score of how interesting a game is
+   * Calculates the score of how interesting a game is.
 
    * @param odds the betting odds from the ESPN API
    * @param sportName the name of the sport ("baseball", "hockey", etc.)
