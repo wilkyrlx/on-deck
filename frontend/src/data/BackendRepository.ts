@@ -25,8 +25,17 @@ export class BackendRepository implements EventsRepository {
         return allGames
     }
     getHighlightGames(teamPreferences: Team[]): Promise<Event[]> {
-        return new Promise(resolve => setTimeout(resolve, 400))
-        .then(() => [])
+        const requestURL = API_URL + `/important?count=3`
+        const responsePromise: Promise<Event[]> = fetch(requestURL)
+                .then(r => r.json())
+                .then(response => {
+                    if (response.result == "error_bad_request") return []
+                    const eventList: BackendEvent[] = response.eventList
+                    console.log(`backend found highlightGames = ${JSON.stringify(eventList)}`)
+                    return eventList.map(backendEvent => backendEventToEvent(backendEvent))
+                })
+        return responsePromise;
+
     }
 }
 
