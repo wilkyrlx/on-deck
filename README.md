@@ -58,6 +58,12 @@ Testing for the frontend includes:
 - Useability testing with friends
 
 
+## Future Goals
+We did not end up implementing betting information. That may be interesting to do in 
+the future. Additionally, our algorithm to determine the best games to watch is a bit slow, so
+we had to artificially limit it. We would like to improve the algorithm to be more efficient.
+
+
 ## Credits
 A special thank you to our TA mentor David for his guidance. In addition, thank you to Tim for a great semester in CS32.
 <br>

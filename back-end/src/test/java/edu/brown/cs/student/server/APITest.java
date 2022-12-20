@@ -1,3 +1,5 @@
+// TODO: comment this back in once maven is working on all machines
+
 //package edu.brown.cs.student.server;
 //
 //import static org.junit.jupiter.api.Assertions.assertEquals;

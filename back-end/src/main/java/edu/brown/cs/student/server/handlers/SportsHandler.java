@@ -85,9 +85,16 @@ public final class SportsHandler implements Route {
     responseMap.put("result", "success");
     responseMap.put("displayName", scheduleData.team().displayName());
 
+
+    int i = 0;
     for (Event event : scheduleData.events()) {
+      i++;
+
       // TODO: this line really slows stuff down. consider removing it
-      this.scorer.addEvent(event, sportName, leagueName);
+      if (i < 5) {  
+        this.scorer.addEvent(event, sportName, leagueName);
+      }
+      
       Map<String, String> innerMap = new LinkedHashMap<>(Map.of(
           "date", event.date(), "name", event.name(),
           "id", event.id(), "link", event.links().get(0).href()
