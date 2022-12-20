@@ -1,23 +1,23 @@
-import { leagueToSport, Sport, sportToString } from "../model/Sport";
-import {  slugToTeam, Team, teamToCookie } from "../model/Team";
-import { Event } from '../model/Event'
-import { allTeams } from "../data/allTeams";
+import {  slugifyTeam, slugToTeam, Team } from "../model/Team";
 
-// TODO: does not load the last added team into cookie
 /**
- * load preferences into cookies
+ * load preferences into localStorage
  * @param savedTeams  - array of teams to save, based on current state
  */
 function savePreferencesCookie(savedTeams: Team[]) {
 
     const cookieBuilder: string[] = [];
     savedTeams.forEach(team => {
-        cookieBuilder.push(teamToCookie(team));
+        cookieBuilder.push(slugifyTeam(team));
     });
 
 	localStorage.setItem("preferences", cookieBuilder.toString())	
 }
 
+/**
+ * Reads from localStorage and returns an array of teams
+ * @returns array of teams from cookie
+ */
 function loadPreferencesCookie() {
     // get preferences from cookies, then send a request to server
     let cookieContents: string | null = localStorage.getItem("preferences");

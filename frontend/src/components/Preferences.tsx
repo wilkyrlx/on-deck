@@ -16,6 +16,11 @@ export interface PreferencesProps {
     onRemoveTeam: (team: Team) => void,
     onAddTeam: (team: Team) => void
 }
+
+/**
+ * Broader preferences component for the preferences page. Controls lists of saved teams and teams to add
+ * by mapping the saved teams and teams to add to the SavedTeamItem and TeamSearch components
+ */
 function Preferences({savedTeams, onRemoveTeam, onAddTeam}: PreferencesProps) {
     return (
         <div className="preferences" aria-label="preferences">
@@ -35,6 +40,9 @@ function Preferences({savedTeams, onRemoveTeam, onAddTeam}: PreferencesProps) {
     )
 }
 
+/**
+ * Wrapper for a team item in the saved teams list or the teams to add list
+ */
 function SavedTeamItem({ team, onRemove }: { team: Team, onRemove: () => void }) {
     return (
         <div className="saved-team-item">
@@ -44,6 +52,9 @@ function SavedTeamItem({ team, onRemove }: { team: Team, onRemove: () => void })
     )
 }
 
+/**
+ * Component for a team item in the saved teams list or the teams to add list
+ */
 function TeamItem({ team, onClick }: { team: Team, onClick: () => void }) {
     return (
         <div className="team-item" onClick={onClick} aria-label={team.name}>
@@ -56,6 +67,10 @@ function TeamItem({ team, onClick }: { team: Team, onClick: () => void }) {
     )
 }
 
+/**
+ * Searchbar for teams to add. In addition to the searchbar, it also displays the results of the search
+ * as a list of TeamItems underneath the searchbar
+ */
 function TeamSearch({ teams, onAdd }:{ teams: Team[], onAdd: (team: Team) => void }) {
     const [ searchTerm, setSearchTerm ] = useState("")
     const results = teams.filter(t => t.name.toLowerCase().includes(searchTerm.toLowerCase()))

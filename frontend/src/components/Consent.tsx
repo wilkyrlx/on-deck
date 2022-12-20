@@ -1,18 +1,27 @@
 import '../styles/Consent.css';
 
+
+/**
+ * Form that asks the user consent to store data in localStorage
+ * After the user consents/does not consent, the form dissapears
+ * @param setConsent - function to set the consent state in the parent component
+ */
 function Consent({ setConsentAsk }: { setConsentAsk: (consent: boolean) => void }) {
     
-
+    /**
+    * Sets the user's consent to true or false, and hides the consent form.
+    * @param isConsenting - whether or not the user is consenting to data storage
+    */
     function giveConsent(isConsenting: boolean) {
         if (!isConsenting) {
             // user is not consenting to data storage
             localStorage.setItem("cookieConsent", "false");
-            setConsentAsk(false);
         } else {
             // user is consenting to data storage
             localStorage.setItem("cookieConsent", "true");
-            setConsentAsk(false);
         }
+        // hide the consent form either way
+        setConsentAsk(false);
     }
 
     return (

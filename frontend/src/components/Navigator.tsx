@@ -7,9 +7,11 @@ export const TEXT_navbar = 'Navbar';
 export const TEXT_calendar_button = 'calendar: navigate to page';
 export const TEXT_preferences_button = 'preferences: navigate to page';
 
-
+/**
+ * The top bar of the page. Contains the logo and the buttons to navigate to the
+ * calendar and preferences page
+ */
 function Navigator({setView, view}: viewProps) {
-
     return (
         <div className="navigator" aria-label={TEXT_navbar}>
             <a href='#' onClick={() => setView(pageView.MAIN)}>

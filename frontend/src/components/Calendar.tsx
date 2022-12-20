@@ -19,6 +19,10 @@ function accessibleCalendarView(events: Event[]): string {
   return fullLabel;
 }
 
+/**
+ * React calendar component from the FullCalendar library
+ * @param events - list of events to be displayed in the calendar 
+ */
 function FullCalendarApp({ events }: { events: Event[] }) {
   const convertedEvents = events.map(e => convertToCalendarEvent(e))
   return (
@@ -38,18 +42,22 @@ function FullCalendarApp({ events }: { events: Event[] }) {
   );
 }
 
-// https://codesandbox.io/s/nxodg?file=/src/App.js:3419-3596
-// demonstrates custom event 
+/**
+ * Custom code for the rendering of events in the calendar
+ * @param eventInfo - event object from FullCalendar
+ */
 function renderEventContent(eventInfo: EventInput) {
   const event: Event = eventInfo.event.extendedProps.eventDetails
-  console.log(event)
   return (
     <CalendarEvent event={event} />
   );
 }
 
-export default FullCalendarApp;
-
+/**
+ * Converts one of our homemade events into a format that is compatible with the FullCalendar library
+ * @param event - event object from the model
+ * @returns an EventInput object that is compatible with the FullCalendar library
+ */
 function convertToCalendarEvent(event: Event): EventInput {
   return {
     id: event.id,
@@ -59,3 +67,5 @@ function convertToCalendarEvent(event: Event): EventInput {
     eventDetails: event,
   }
 }
+
+export default FullCalendarApp;

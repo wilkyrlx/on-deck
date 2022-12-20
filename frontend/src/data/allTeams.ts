@@ -1,6 +1,14 @@
 import { Sport } from "../model/Sport";
 import { Team } from "../model/Team";
 
+/**
+ * All teams in the app are stored in this ts file. To add new teams, follow directions
+ * in the README.
+ * 
+ * Each league should be stored in a different array for style. The array should be named after the
+ * league, and the array should be concated to allTeams.
+ */
+
 const nfl: Team[] = [
     {
         name: "Arizona Cardinals",

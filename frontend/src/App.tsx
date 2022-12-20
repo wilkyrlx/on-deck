@@ -5,12 +5,13 @@ import { Navigator } from "./components/Navigator";
 import { pageView } from "./types/pageView";
 import { MockRepository } from './data/mock';
 import { MainCalendar } from './components/MainCalendar';
-import { slugToTeam, Team } from './model/Team';
+import { Team } from './model/Team';
 import { loadPreferencesCookie, savePreferencesCookie } from './save-data/preferencesManager';
 import { EventsRepository } from "./data/EventsRepository";
 import { BackendRepository } from "./data/BackendRepository";
 import { Consent } from './components/Consent';
 
+// props for pageView component
 export interface viewProps {
 	setView: Dispatch<SetStateAction<pageView>>,
 	view: pageView,
@@ -58,12 +59,22 @@ function App() {
 
 
 
+	/**
+	 * Adds or removes a team from the user's preferences. In addition, saves the
+	 * new preferences to local storage ONLY IF the user has given consent
+	 * 
+	 * @param team - the team to add or remove from the user's preferences
+	 * @param isAdding whether or not the user is adding or removing a team
+	 */
 	function updateTeamPreference(team: Team, isAdding: boolean) {
 		if (isAdding) {
-			// runs if user is adding a preference
+			// runs if user is adding a preference, adds the team to the list
+			// TODO: does not load the last added team into cookie
 			setSavedTeams(savedTeams.concat(team))
+			console.log('contents of savedTeams after adding: ' + savedTeams.map(t => t.name).join(','));
+			console.log('contents of savedTeams with concat: ' + savedTeams.concat(team).map(t => t.name).join(','));
 		} else {
-			// runs if user is removing a preference
+			// runs if user is removing a preference, removes the team from the list
 			setSavedTeams(savedTeams.filter(t => t !== team))
 		}
 
