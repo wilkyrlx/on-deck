@@ -18,11 +18,7 @@ export interface viewProps {
 }
 
 
-function App() {
-
-	const repository: EventsRepository = new BackendRepository()
-	// const repository: EventsRepository = new MockRepository()
-
+function App({repository}: {repository: EventsRepository}) {
 	const [view, setView] = useState<pageView>(pageView.MAIN)	// determines which tab to open
 	const [savedTeams, setSavedTeams] = useState<Team[]>([]) 	// stores the teams that the user has selected
 	/* determines whether or not to show the consent form. NOTE: 

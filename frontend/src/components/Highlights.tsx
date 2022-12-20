@@ -30,7 +30,7 @@ function Highlights({ events }: { events: Event[] | null }) {
  */
 function HighlightItem({ event }: { event: Event }) {
     return (
-        <div className="highlight" aria-label={accessibleEvent(event)}>
+        <div className="highlight" aria-label={"Highlighted game:" + accessibleEvent(event)}>
             <b>{event.dateTimeRange()}</b>
             <p>{event.title()}</p>
         </div>

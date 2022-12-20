@@ -9,7 +9,7 @@ import { accessibleEvent } from './MainCalendar';
  */
 export function CalendarEvent({event}: {event: Event}) {
     return (
-    <div className="calendar-event" aria-label={accessibleEvent(event)}>
+    <div className="calendar-event" aria-label={"Calendar game:" + accessibleEvent(event)}>
         <img src={event.homeTeam.iconUrl}/>
         <div className="event-text">
             <b>{event.title()}</b>

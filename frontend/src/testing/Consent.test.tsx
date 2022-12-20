@@ -4,10 +4,11 @@ import { within } from '@testing-library/dom';
 import '@testing-library/jest-dom';
 import App from '../App';
 import { Consent, TEXT_consent_button_text, TEXT_deny_button_text } from "../components/Consent";
+import { MockRepository } from '../data/mock';
 
 // Setup: render the REPL component
 beforeEach(() => {
-    render(<App/>);
+    render(<App repository={new MockRepository()}/>);
 })
 
 afterEach(() => {
