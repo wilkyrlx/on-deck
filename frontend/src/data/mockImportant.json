@@ -1,0 +1,23 @@
+{
+    "result": "success",
+    "eventList": [
+        {
+            "date": "2022-10-22T23:00Z",
+            "id": "401468185",
+            "name": "Boston Celtics at Orlando Magic",
+            "link": "https://www.espn.com/nba/game/_/gameId/401468185"
+        },
+        {
+            "date": "2023-01-21T22:00Z",
+            "id": "401468847",
+            "name": "Boston Celtics at Toronto Raptors",
+            "link": "https://www.espn.com/nba/game/_/gameId/401468847"
+        },
+        {
+            "date": "2022-12-08T03:00Z",
+            "id": "401468528",
+            "name": "Boston Celtics at Phoenix Suns",
+            "link": "https://www.espn.com/nba/game/_/gameId/401468528"
+        }
+    ]
+}

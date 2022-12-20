@@ -6,7 +6,6 @@ target
 out/
 .DS_Store
 
-x.json
 x2.json
 
 back-end/.mvn-classpath
