@@ -29,14 +29,16 @@ function App() {
 	 * This does NOT track if the user has given consent to save data. 
 	 * It only tracks if the user has answered the consent form in some way
 	*/
-	const [consentAsk, setConsentAsk] = useState<boolean>(true);
+	const [isConsentGranted, setIsConsentGranted] = useState<boolean | null>(checkConsent());
 
 	// FIXME: component mounts twice because index.tsx has react.strictmode. see https://stackoverflow.com/questions/61254372/my-react-component-is-rendering-twice-because-of-strict-mode/61897567#61897567
 	// runs when the component is mounted (only once)
 	useEffect(() => {
 		console.log('initializing app - sending request to server');
 		checkConsent();
-		setSavedTeams(loadPreferencesCookie());
+		const initialTeams = (isConsentGranted) ? loadPreferencesCookie() : [];
+		console.log(`loading initial teams = ${JSON.stringify(initialTeams)}`)
+		setSavedTeams(initialTeams);
 	}, []);
 
 
@@ -47,13 +49,11 @@ function App() {
 	 * NOTE: this is agnostic to whether or not the user has given consent. It only
 	 * tracks if the user answered the consent form in some way
 	 */
-	function checkConsent() {
+	function checkConsent(): boolean | null {
 		const cookieConsent: string | null = localStorage.getItem("cookieConsent");
-		if (cookieConsent !== null) {
-			setConsentAsk(false);
-		} else {
-			setConsentAsk(true);
-		}
+		if(cookieConsent == "true") return true;
+		if(cookieConsent == "false") return false;
+		return null;
 	}
 
 	/**
@@ -62,30 +62,25 @@ function App() {
 	 * @param isAdding whether or not the user is adding or removing a team
 	 */
 	function updateTeamPreference(team: Team, isAdding: boolean) {
+		let newTeams: Team[]
 		if (isAdding) {
 			// runs if user is adding a preference, adds the team to the list
-			(() => setSavedTeams(savedTeams.concat(team)))();
+			newTeams = savedTeams.concat(team)
 		} else {
 			// runs if user is removing a preference, removes the team from the list
-			setSavedTeams(savedTeams.filter(t => t !== team))
+			newTeams = savedTeams.filter(t => t !== team)
+		}
+
+		setSavedTeams(newTeams)
+		if (isConsentGranted == true) {
+			savePreferencesCookie(newTeams);
+			console.log('contents of savedTeams from effect: ' + newTeams.map(t => t.name).join(','));
 		}
 	}
 
-	/**
-	 * Saves the new preferences to local storage ONLY IF the user has given consent
-	 * every time savedTeams is updated, this effect runs
-	 */
-	useEffect(() => {
-		const cookieConsent: string | null = localStorage.getItem("cookieConsent");
-		if (cookieConsent === "true") {
-			savePreferencesCookie(savedTeams);
-			console.log('contents of savedTeams from effect: ' + savedTeams.map(t => t.name).join(','));
-		}
-	}, [savedTeams]);
-
 	return (
 		<div className="app">
-			{consentAsk && <Consent setConsentAsk={setConsentAsk} />}
+			{isConsentGranted == null && <Consent setIsConsentGranted={setIsConsentGranted} />}
 			<Navigator setView={setView} view={view} />
 			{view === pageView.PREFERENCES &&
 				<Preferences

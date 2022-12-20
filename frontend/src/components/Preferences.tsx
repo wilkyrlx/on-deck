@@ -1,7 +1,7 @@
 import { sportToString } from "../model/Sport";
 import { Team } from "../model/Team"
 import '../styles/Preferences.css';
-import {Cross1Icon} from "@radix-ui/react-icons";
+import {Cross1Icon, MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import {useState} from "react";
 
 // allows for mocking of saved teams
@@ -26,14 +26,14 @@ function Preferences({savedTeams, onRemoveTeam, onAddTeam}: PreferencesProps) {
         <div className="preferences" aria-label="preferences">
             { savedTeams.length > 0 && (
                 <div className="your-teams" aria-label="your teams">
-                    <h1>Your Teams</h1>
+                    <h3>Your Teams</h3>
                     {savedTeams.map((team) =>
                     <SavedTeamItem team={team} onRemove={() => onRemoveTeam(team)}/>
                     )}
                 </div>
             )}
             <div className="add-teams">
-                <h1>Add Teams</h1>
+                <h3>Add Teams</h3>
                 <TeamSearch teams={allTeams.filter(t => !savedTeams.includes(t))} onAdd={onAddTeam}/>
             </div>
         </div>
@@ -41,19 +41,19 @@ function Preferences({savedTeams, onRemoveTeam, onAddTeam}: PreferencesProps) {
 }
 
 /**
- * Wrapper for a team item in the saved teams list or the teams to add list
+ * Wrapper for a team item in the saved teams list
  */
 function SavedTeamItem({ team, onRemove }: { team: Team, onRemove: () => void }) {
     return (
         <div className="saved-team-item">
             <TeamItem team={team} onClick={() => false}/>
-            <Cross1Icon onClick={onRemove}/>
+            <Cross1Icon className="icon-button" onClick={onRemove}/>
         </div>
     )
 }
 
 /**
- * Component for a team item in the saved teams list or the teams to add list
+ * Base component for a team item in the saved teams list or the teams to add list
  */
 function TeamItem({ team, onClick }: { team: Team, onClick: () => void }) {
     return (
@@ -68,6 +68,14 @@ function TeamItem({ team, onClick }: { team: Team, onClick: () => void }) {
 }
 
 /**
+ * Wrapper for a team item in the teams to add list
+ */
+
+function SearchTeamItem({ team, onClick }: { team: Team, onClick: () => void }) {
+    return (<div className="search-team-item"><TeamItem team={team} onClick={onClick}/></div>)
+}
+
+/**
  * Searchbar for teams to add. In addition to the searchbar, it also displays the results of the search
  * as a list of TeamItems underneath the searchbar
  */
@@ -76,16 +84,27 @@ function TeamSearch({ teams, onAdd }:{ teams: Team[], onAdd: (team: Team) => voi
     const results = teams.filter(t => t.name.toLowerCase().includes(searchTerm.toLowerCase()))
     return (
         <div className="search-wrapper" aria-label={TEXT_search_name}>
-            <input className="add-teams-search" placeholder={TEXT_search_name} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+            <SearchBar term={searchTerm} onChange={(t) => setSearchTerm(t)} />
             { searchTerm.length > 0 &&
                 <div className="search-results">
                     { results.map(team =>
-                    <TeamItem team={team} onClick={() => onAdd(team)}/>
+                    <SearchTeamItem team={team} onClick={() => onAdd(team)}/>
                     )}
                 </div>
             }
         </div>
+    )
+}
 
+/**
+ * Just the searchbar for teams to add
+ */
+function SearchBar({term, onChange}: {term: string, onChange: (term: string) => void}) {
+    return (
+        <div className="search-bar-wrapper">
+            <MagnifyingGlassIcon/>
+            <input className="add-teams-search" placeholder={TEXT_search_name} value={term} onChange={(e) => onChange(e.target.value)}/>
+        </div>
     )
 }
 

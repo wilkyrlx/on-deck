@@ -6,7 +6,7 @@ import '../styles/Consent.css';
  * After the user consents/does not consent, the form dissapears
  * @param setConsent - function to set the consent state in the parent component
  */
-function Consent({ setConsentAsk }: { setConsentAsk: (consent: boolean) => void }) {
+function Consent({ setIsConsentGranted }: { setIsConsentGranted: (consent: boolean) => void }) {
     
     /**
     * Sets the user's consent to true or false, and hides the consent form.
@@ -16,12 +16,13 @@ function Consent({ setConsentAsk }: { setConsentAsk: (consent: boolean) => void 
         if (!isConsenting) {
             // user is not consenting to data storage
             localStorage.setItem("cookieConsent", "false");
+            localStorage.removeItem("preferences");
         } else {
             // user is consenting to data storage
             localStorage.setItem("cookieConsent", "true");
         }
         // hide the consent form either way
-        setConsentAsk(false);
+        setIsConsentGranted(isConsenting);
     }
 
     return (

@@ -21,13 +21,13 @@ export function slugifyTeam(team: Team): string {
  * @param cookie - such as new-england-patriots
  * @returns Team object (in this case, for the New England Patriots)
  */
-export function slugToTeam(slugName: string): Team {
+export function slugToTeam(slugName: string): Team | undefined {
     // we only care about the slug, so split on the cookie and take the third element
     const teamName: string = unslugifyTeamName(slugName);
     const teams:Team[] = allTeams;
 
-    const results = teams.filter(t => t.name.toLowerCase().includes(teamName.toLowerCase()))
-    return results[0];
+    //const results = teams.filter(t => t.name.toLowerCase().includes(teamName.toLowerCase()))
+    return teams.find(t => t.name.toLowerCase() == teamName.toLowerCase());
 }
 
 /**

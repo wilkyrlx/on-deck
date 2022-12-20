@@ -18,20 +18,22 @@ function savePreferencesCookie(savedTeams: Team[]) {
  * Reads from localStorage and returns an array of teams
  * @returns array of teams from cookie
  */
-function loadPreferencesCookie() {
+function loadPreferencesCookie(): Team[] {
     // get preferences from cookies, then send a request to server
     let cookieContents: string | null = localStorage.getItem("preferences");
     
-    if (cookieContents == null) {
-        cookieContents = "";
-    }
+    console.log(`loading preferences, cookieContents = ${cookieContents}`)
+
+    if (cookieContents == null) return []
 
     const cookieList: string[] = cookieContents.split(",");
+    console.log(`cookieList = ${cookieList}`)
+
     let teams: Team[] = [];
 
     cookieList.forEach(slug => {
         const team = slugToTeam(slug);
-        teams.push(team);
+        if(team != undefined) teams.push(team);        
     });
 
     return teams;
