@@ -12,7 +12,9 @@ import edu.brown.cs.student.util.Scorer;
 import edu.brown.cs.student.util.ServerFailureException;
 import edu.brown.cs.student.util.WebResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,12 +91,14 @@ public final class SportsHandler implements Route {
 
 
     int i = 0;
+    LocalDate today = LocalDate.now();
     for (Event event : scheduleData.events()) {
-      i++;
 
+      LocalDate eventDate = LocalDate.parse(event.date());
       // TODO: this line really slows stuff down. consider removing it
-      if (i < 5) {  
+      if (eventDate.isAfter(today) && i < 5) {  
         this.scorer.addEvent(event, sportName, leagueName);
+        i++;
       }
       
       Map<String, String> innerMap = new LinkedHashMap<>(Map.of(
