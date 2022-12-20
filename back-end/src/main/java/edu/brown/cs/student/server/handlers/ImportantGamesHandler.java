@@ -58,9 +58,11 @@ public final class ImportantGamesHandler implements Route {
     if (mostInteresting != null) {
       List<Map<String, String>> eventList = new ArrayList<>();
       for (Event event : mostInteresting) {
+        // TODO: not pretty, but this solution for homeTeamName and awayTeamName will work
         Map<String, String> innerMap = new LinkedHashMap<>(Map.of(
           "date", event.date(), "name", event.name(),
-          "id", event.id(), "link", event.links().get(0).href()
+          "id", event.id(), "link", event.links().get(0).href(),
+            "homeTeamName", "unused", "awayTeamName", "unused"
       ));
         eventList.add(innerMap);
       }
