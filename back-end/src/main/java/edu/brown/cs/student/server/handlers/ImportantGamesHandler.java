@@ -62,7 +62,7 @@ public final class ImportantGamesHandler implements Route {
         Map<String, String> innerMap = new LinkedHashMap<>(Map.of(
           "date", event.date(), "name", event.name(),
           "id", event.id(), "link", event.links().get(0).href(),
-            "homeTeamName", "unused", "awayTeamName", "unused"
+            "homeTeamName", "Washington Wizards", "awayTeamName", "Washington Wizards"
       ));
         eventList.add(innerMap);
       }

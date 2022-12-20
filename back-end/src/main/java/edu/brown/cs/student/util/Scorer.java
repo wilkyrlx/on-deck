@@ -59,7 +59,7 @@ public final class Scorer {
         throw new IOException();
       }
       return this.calculateScore(odds, sportName);
-    } catch (IOException | InterruptedException e) {
+    } catch (Exception e) {
       return 0.0; // default score if odds can't be reached
     }
   }
