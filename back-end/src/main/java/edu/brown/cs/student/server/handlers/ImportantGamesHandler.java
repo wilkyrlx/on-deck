@@ -4,6 +4,8 @@ import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import edu.brown.cs.student.server.data.ESPNContents.Event;
 import edu.brown.cs.student.util.Scorer;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import spark.Request;
@@ -53,8 +55,29 @@ public final class ImportantGamesHandler implements Route {
    * @return a Map representing either a successful addition or an error message
    */
   private static Map<String, Object> addEventsToMap(List<Event> mostInteresting) {
+//    for (Event event : scheduleData.events()) {
+//      this.scorer.addEvent(event, sportName, leagueName);
+//      Map<String, String> innerMap = new LinkedHashMap<>(Map.of(
+//          "date", event.date(), "name", event.name(),
+//          "id", event.id(), "link", event.links().get(0).href()
+//      ));
+//      this.addHomeAndAway(event, innerMap);
+//
+//      eventListOfMaps.add(innerMap);
+//    }
+//    responseMap.put("eventList", eventListOfMaps);
+
+
     if (mostInteresting != null) {
-      return Map.of("result", "success", "topEvents", mostInteresting);
+      List<Map<String, String>> eventList = new ArrayList<>();
+      for (Event event : mostInteresting) {
+        Map<String, String> innerMap = new LinkedHashMap<>(Map.of(
+          "date", event.date(), "name", event.name(),
+          "id", event.id(), "link", event.links().get(0).href()
+      ));
+        eventList.add(innerMap);
+      }
+      return Map.of("result", "success", "eventList", eventList);
     } else {
       return Map.of("result", "error_datasource");
     }
