@@ -58,6 +58,6 @@ public class Server {
     Spark.get("*", new DefaultHandler());
     Spark.init();
     Spark.awaitInitialization();
-    System.out.println("Server started.");
+    System.out.println("Server started. 1.2");
   }
 }
