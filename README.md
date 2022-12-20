@@ -19,6 +19,10 @@ Currently, the project is only scoped to let users select teams in the NFL, NBA,
 <br>
 We decided to store user data in localStorage on the frontend. localStorage is lightweight so OAuth with a database is not necessary, although adding a database may be a nice goal for a future sprint. Furthermore, the data being stored by our application is not particularly sensitive. That being said, we do allow users to opt out so that their data is not stored.
 
+<p align="center">
+  <img src="https://github.com/cs0320-f2022/term-project-aburris3-achavaro-cmoran5-jwilkin7/blob/master/frontend/public/images/demo-ss.png?raw=true" width="500">
+<p>
+
 ## Usage
 ### Backend - For Users
 To run the backend server, one can run the Main() method in Main.java after using <code>mvn package</code>. Alternatively, navigate into the back-end directory and enter the command <code>./run server</code> into a Git Bash terminal. This will start a local server.

@@ -76,6 +76,7 @@ function App() {
 	}
 
 	const repository: EventsRepository = new BackendRepository()
+	// const repository: EventsRepository = new MockRepository()
 
 	return (
 		<div className="app">
