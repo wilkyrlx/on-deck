@@ -55,19 +55,6 @@ public final class ImportantGamesHandler implements Route {
    * @return a Map representing either a successful addition or an error message
    */
   private static Map<String, Object> addEventsToMap(List<Event> mostInteresting) {
-//    for (Event event : scheduleData.events()) {
-//      this.scorer.addEvent(event, sportName, leagueName);
-//      Map<String, String> innerMap = new LinkedHashMap<>(Map.of(
-//          "date", event.date(), "name", event.name(),
-//          "id", event.id(), "link", event.links().get(0).href()
-//      ));
-//      this.addHomeAndAway(event, innerMap);
-//
-//      eventListOfMaps.add(innerMap);
-//    }
-//    responseMap.put("eventList", eventListOfMaps);
-
-
     if (mostInteresting != null) {
       List<Map<String, String>> eventList = new ArrayList<>();
       for (Event event : mostInteresting) {
