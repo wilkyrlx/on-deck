@@ -12,6 +12,9 @@ Our project, On Deck! aims to solve the problem of sports fan encountering too m
 - [John Wilkinson](https://github.com/wilkyrlx) - frontend
 - [Caleb Moran](https://github.com/cm3cm) - backend
 - [Adrien Chavarot](https://github.com/chavarota) - backend
+<br>
+<br>
+This project was originally completed for Brown's CS32 Software Engineering course, and later has been maintained and improved upon by the team members.
 
 ## Design Choices
 Currently, the project is only scoped to let users select teams in the NFL, NBA, NHL, or MLB. While we demonstrate how more teams could be added easily, maintaining a large database of these teams to reference requires extra work, and so we decided to provide these teams as a proof of concept. 
