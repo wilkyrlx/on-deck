@@ -5,6 +5,7 @@ import {slugifyTeam, Team} from "../model/Team";
 import {allTeams} from "./allTeams";
 import {addHours} from "./mock";
 
+// TODO: change this to be equal to the backend's base url
 const API_URL = "http://localhost:3232"
 export class BackendRepository implements EventsRepository {
     getEvents(teamPreferences: Team[]): Promise<Event[]> {
