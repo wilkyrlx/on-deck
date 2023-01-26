@@ -6,7 +6,7 @@ import {allTeams} from "./allTeams";
 import {addHours} from "./mock";
 
 // TODO: change this to be equal to the backend's base url
-const API_URL = "http://localhost:3232"
+const API_URL = "https://us-central1-on-deck-375716.cloudfunctions.net"
 export class BackendRepository implements EventsRepository {
     getEvents(teamPreferences: Team[]): Promise<Event[]> {
         const requestPromises: Promise<Event[]>[] = teamPreferences.map(team => {
