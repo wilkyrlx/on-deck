@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import teamIDConverter from "./util/teamConverter";
+import { slugIDConversionsMap } from "./data/slugIDConversions";
 
 
 export const sports = functions.https.onRequest(async (request, response) => {
@@ -9,11 +9,11 @@ export const sports = functions.https.onRequest(async (request, response) => {
     const leagueParam: string = request.query.league as string
     // TODO: convert this teamParamRaw to correct code
     const teamParamRaw: string = request.query.team as string
-    const teamConverter = await teamIDConverter(); 
-    const teamParam: string = teamConverter.get(teamParamRaw) as string;
-    console.log(teamParam + " this is the teamParam")
+
+    const teamParamParsed: string = slugIDConversionsMap.find((team: any) => team.slug === teamParamRaw)?.id || "ID NOT FOUND FOR SLUG";
+
     // const requestURL: string = API_URL_STUB_SCHED + sportParam + "/" + leagueParam + "/scoreboard?lang=en&region=us&calendartype=blacklist&limit=100&dates=2020&teams=" + teamParamRaw
-    const requestURL: string = API_URL_STUB_SCHED + sportParam + "/" + leagueParam + "/teams/" + teamParamRaw + "/schedule";
+    const requestURL: string = API_URL_STUB_SCHED + sportParam + "/" + leagueParam + "/teams/" + teamParamParsed + "/schedule";
     const rawResponse: any = await fetch(requestURL);
     const espnResponse: any = await rawResponse.json();
 
