@@ -5,7 +5,6 @@ import {slugifyTeam, Team} from "../model/Team";
 import {allTeams} from "./allTeams";
 import {addHours} from "./mock";
 
-// TODO: change this to be equal to the backend's base url
 const API_URL = "https://us-central1-on-deck-375716.cloudfunctions.net"
 export class BackendRepository implements EventsRepository {
     getEvents(teamPreferences: Team[]): Promise<Event[]> {
@@ -30,7 +29,7 @@ export class BackendRepository implements EventsRepository {
         const responsePromise: Promise<Event[]> = fetch(requestURL)
                 .then(r => r.json())
                 .then(response => {
-                    if (response.result == "error_bad_request") return []
+                    if (response.result == "error_bad_request" || response.result == "error_not_implemented") return []
                     const eventList: BackendEvent[] = response.eventList
                     console.log(`backend found highlightGames = ${JSON.stringify(eventList)}`)
                     return eventList.map(backendEvent => backendEventToEvent(backendEvent))

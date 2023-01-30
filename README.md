@@ -8,10 +8,10 @@ Our project, On Deck! aims to solve the problem of sports fan encountering too m
 <br>
 <br>
 **Team Members:**
-- [Andy Burris](https://github.com/andyburris) - frontend 
-- [John Wilkinson](https://github.com/wilkyrlx) - frontend
-- [Caleb Moran](https://github.com/cm3cm) - backend
-- [Adrien Chavarot](https://github.com/chavarota) - backend
+- [Andy Burris](https://github.com/andyburris) - frontend, deployment
+- [John Wilkinson](https://github.com/wilkyrlx) - frontend, deployment, NodeJS backend 
+- [Caleb Moran](https://github.com/cm3cm) - java backend, deployment
+- [Adrien Chavarot](https://github.com/chavarota) - java backend
 <br>
 <br>
 This project was originally completed for Brown's CS32 Software Engineering course, and later has been maintained and improved upon by the team members.
@@ -27,10 +27,15 @@ We decided to store user data in localStorage on the frontend. localStorage is l
 <p>
 
 ## Usage
-### Backend - For Users
+### Live Demo - For Users
+The live demo can be found at https://on-deck-375716.web.app/. This is the easiest way to use the application, although currently the backend that it uses is a lightweight version written in NodeJs that lacks the "highlighted games" feature.
+
+To use the application, simply select the teams you want to watch, and the application will generate a schedule for you. You can also select the time range you want to watch games in, and the application will only generate games that fall within that range. The application will also generate a schedule for you if you select no teams, but this will be a schedule of all the games that are currently active. You can also opt out of having your data stored in localStorage by clicking the checkbox at the bottom of the page. This will prevent the application from storing your preferences in localStorage, and will also prevent the application from generating a schedule for you. If you opt out, you will have to select your teams again the next time you visit the site.
+
+### Local Backend - For Users
 To run the backend server, one can run the Main() method in Main.java after using <code>mvn package</code>. Alternatively, navigate into the back-end directory and enter the command <code>./run server</code> into a Git Bash terminal. This will start a local server.
 
-### Frontend - For Users
+### Local Frontend - For Users
 Navigate into the frontend directory and run <code>npm start</code>
 
 ### To add more teams - For Devs
