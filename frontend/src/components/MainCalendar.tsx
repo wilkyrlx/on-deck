@@ -26,7 +26,8 @@ function MainCalendar({ repository, savedTeams }: { repository: EventsRepository
     }, [repository, savedTeams])
     return (
         <div>
-            <Highlights events={highlightedGames}/>
+            {/* TODO: uncomment this when we have the highlights component functional */}
+            {/* <Highlights events={highlightedGames}/> */}
             <FullCalendarApp events={events}/>
         </div>
     );
