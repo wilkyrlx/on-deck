@@ -18,14 +18,13 @@ export const sports = functions.https.onRequest(async (request, response) => {
     // FIXME: incurring some issues with CORS/ deployment. maybe handle promises better?
     try {
         const rawResponse: any = await fetch(requestURL);
-        functions.logger.error(rawResponse, { structuredData: true });
         espnResponse = await rawResponse.json();
         // espnResponse =  utahJazzMockResponse;
     } catch (error) {
         response.send({ result: "fetch error", error: error });
         return;
     }
-    
+
 
     const eventList: any[] = [];
 
@@ -39,7 +38,7 @@ export const sports = functions.https.onRequest(async (request, response) => {
     } catch (error) {
         response.send({ result: "foreach error", error: error });
     }
-    
+
 
     const finalResponse = { result: "success", displayName: espnResponse.team.displayName, eventList: eventList };
     response.send(finalResponse);
