@@ -52,6 +52,8 @@ To add more teams to the list of teams that are accessible, some work must be ac
 7. Append the new const list to the const allTeams at the bottom
 8. Finally, make a corresponding enum in model/Sport.ts
 
+If using the lightweight TypeScript backend, you will also need to add the teams to the slugIDConversions.json file in the backend directory. This file is used to generate the schedule for the highlighted games feature. More instructions can be found in the corresponding subdirectory.
+
 ## Testing
 Testing for the backend includes:
 - Testing public functions and the server responses using JUnit
