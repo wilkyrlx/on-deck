@@ -10,6 +10,7 @@ function accessibleEvent(event: Event) {
     return event.title() + ' at ' + event.timeRange();
 }
 
+
 /**
  * This wrapper handles data fetching and passing it to the calendar and highlights components
  * Highlights is the top 3 games to display at the top
@@ -20,8 +21,24 @@ function accessibleEvent(event: Event) {
 function MainCalendar({ repository, savedTeams }: { repository: EventsRepository, savedTeams: Team[] }) {
     const [highlightedGames, setHighlightedGames] = useState<Event[] | null>(null)
     const [events, setEvents] = useState<Event[]>([])
+
+    /**
+     * Removes duplicate events. This occurs if a user has both teams playing in 
+     * their preferences (i.e. the user has both the Lakers and Clippers saved, and
+     * the Lakers are playing the Clippers)
+     * @param events - list of events to remove duplicates from
+     * @returns a list of events with no duplicates
+     */
+    function removeDuplicates(events: Event[]): Event[] {
+        const seen = new Set();
+        return events.filter(event => {
+            const duplicate = seen.has(event.id);
+            seen.add(event.id);
+            return !duplicate;
+        });
+    }
     useEffect(() => {
-        repository.getEvents(savedTeams).then(e => setEvents(e))
+        repository.getEvents(savedTeams).then(e => setEvents(removeDuplicates(e)))
         repository.getHighlightGames(savedTeams).then(h => setHighlightedGames(h))
     }, [repository, savedTeams])
     return (
