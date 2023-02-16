@@ -1,4 +1,5 @@
 import '../styles/CalendarEvent.css';
+import '../styles/Calendar.css';
 import FullCalendar, { EventInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -37,6 +38,8 @@ function FullCalendarApp({ events }: { events: Event[] }) {
         dateClick={(e) => console.log(e.dateStr)}
         eventClick={(e) => console.log(e.event.id)}
         eventContent={renderEventContent}
+        scrollTime="16:00:00"   
+        height="100%" // sets height to container, calendar div
       />
     </div>
   );
