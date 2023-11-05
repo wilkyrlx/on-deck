@@ -7,6 +7,11 @@ import {addHours} from "./mock";
 
 const API_URL = "https://us-central1-on-deck-375716.cloudfunctions.net"
 export class BackendRepository implements EventsRepository {
+    checkBackendRunning() {
+        const requestURL = API_URL + `/healthcheck`
+        const responsePromise = fetch(requestURL)
+        return responsePromise
+    }
     getEvents(teamPreferences: Team[]): Promise<Event[]> {
         const requestPromises: Promise<Event[]>[] = teamPreferences.map(team => {
             const requestURL = API_URL + `/sports?sport=${sportToSportString(team.sport)}&league=${sportToLeagueString(team.sport)}&team=${slugifyTeam(team)}`

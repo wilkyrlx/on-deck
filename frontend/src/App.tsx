@@ -35,6 +35,14 @@ function App({repository}: {repository: EventsRepository}) {
 		const initialTeams = (isConsentGranted) ? loadPreferencesCookie() : [];
 		console.log(`loading initial teams = ${JSON.stringify(initialTeams)}`)
 		setSavedTeams(initialTeams);
+        
+        const x = new BackendRepository();
+        x.checkBackendRunning().then((response) => {
+            console.log('backend running');
+          }).catch((error) => {
+            console.log('backend not running');
+            alert('Our backend is currently down due to inactivity, so most features will not work. We are sorry for the inconvenience, but if you would like to see the full functionality of our app, please submit an issue at https://github.com/wilkyrlx/on-deck/issues and we will start our backend server up again!');
+          });
 	}, []);
 
 
